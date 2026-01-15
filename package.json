@@ -1,5 +1,5 @@
 {
-    "name": "@prompter/cli",
+    "name": "@dedesfr/prompter",
     "version": "0.1.0",
     "description": "Enhance prompts directly in your AI coding workflow",
     "type": "module",
@@ -7,21 +7,32 @@
     "bin": {
         "prompter": "./bin/prompter.js"
     },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Dedesfr/Prompter.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Dedesfr/Prompter/issues"
+    },
+    "homepage": "https://github.com/Dedesfr/Prompter#readme",
     "scripts": {
         "build": "node build.js",
         "dev": "tsc --watch",
         "dev:cli": "pnpm build && node bin/prompter.js",
         "test": "vitest run",
-        "test:watch": "vitest"
+        "test:watch": "vitest",
+        "prepublishOnly": "pnpm run build"
     },
     "keywords": [
         "prompt",
         "ai",
         "cli",
         "workflow",
-        "specification"
+        "specification",
+        "prompt-engineering",
+        "ai-assistant"
     ],
-    "author": "",
+    "author": "Dedesfr",
     "license": "MIT",
     "engines": {
         "node": ">=20.0.0"
