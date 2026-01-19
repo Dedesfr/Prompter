@@ -41,10 +41,22 @@ prompter init
 ## Commands
 
 ```bash
-prompter init              # Initialize Prompter in your project
+prompter init              # Initialize Prompter (or re-configure tools)
 prompter update            # Update workflow files to latest version
 prompter list              # List all enhanced prompts
 prompter list --json       # Output as JSON
+```
+
+### Re-configuring Tools
+
+You can run `prompter init` again at any time to add, remove, or switch AI tools. See [docs/reconfigure-tools.md](docs/reconfigure-tools.md) for details.
+
+```bash
+# Add or remove tools interactively
+prompter init
+
+# Or specify tools directly
+prompter init --tools github-copilot,claude
 ```
 
 ## Output Structure
