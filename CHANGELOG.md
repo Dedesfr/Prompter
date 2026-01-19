@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [Unreleased]
+## [0.2.0] - 2026-01-19
 
 ### ✨ Added
 - **Re-configurable AI Tools**: `prompter init` now allows re-selection of AI tools at any time, even after initial setup
