@@ -194,7 +194,10 @@ export class InitCommand {
         } else {
             console.log(chalk.green('\n✅ Prompter initialized successfully!\n'));
             console.log(chalk.blue('Next steps:'));
-            console.log(chalk.gray('  1. Edit prompter/project.md to describe your project'));
+            console.log(chalk.gray('  1. Provide a detailed and filled-out version of the "prompter/project.md"'));
+            console.log(chalk.gray('     document based on the project\'s specifics, including a clear description'));
+            console.log(chalk.gray('     of the project, its purpose, the technologies used (tech stack), and any'));
+            console.log(chalk.gray('     conventions or standards being followed.'));
             console.log(chalk.gray('  2. Use /prompter-enhance to transform prompts'));
             console.log(chalk.gray('  3. Run `prompter list` to see enhanced prompts\n'));
         }
