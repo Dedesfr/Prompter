@@ -2,11 +2,19 @@ import { SlashCommandConfigurator } from './base.js';
 import { SlashCommandId } from '../../templates/index.js';
 
 const FILE_PATHS: Record<SlashCommandId, string> = {
-    enhance: '.claude/commands/prompter/enhance.md'
+    enhance: '.claude/commands/prompter/enhance.md',
+    'prd-generator': '.claude/commands/prompter/prd-generator.md',
+    'epic-single': '.claude/commands/prompter/epic-single.md',
+    'story-single': '.claude/commands/prompter/story-single.md',
+    'qa-test-scenario': '.claude/commands/prompter/qa-test-scenario.md'
 };
 
 const DESCRIPTIONS: Record<SlashCommandId, string> = {
-    enhance: 'Enhance a rough prompt into a professional specification'
+    enhance: 'Enhance a rough prompt into a professional specification',
+    'prd-generator': 'Generate a comprehensive Product Requirements Document (PRD)',
+    'epic-single': 'Generate a single well-defined Jira Epic',
+    'story-single': 'Generate a single Jira User Story from requirements',
+    'qa-test-scenario': 'Generate focused QA test scenarios from PRD'
 };
 
 export class ClaudeConfigurator extends SlashCommandConfigurator {

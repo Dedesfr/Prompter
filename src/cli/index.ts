@@ -2,6 +2,7 @@ import { Command } from 'commander';
 import { InitCommand } from '../commands/init.js';
 import { UpdateCommand } from '../commands/update.js';
 import { ListCommand } from '../commands/list.js';
+import { PrdGeneratorCommand } from '../commands/prd-generator.js';
 
 const program = new Command();
 
@@ -35,6 +36,14 @@ program
     .action(async (options) => {
         const listCommand = new ListCommand();
         await listCommand.execute(options);
+    });
+
+program
+    .command('prd-generator')
+    .description('Generate PRD workflow files for configured AI tools')
+    .action(async (options) => {
+        const prdGeneratorCommand = new PrdGeneratorCommand();
+        await prdGeneratorCommand.execute(options);
     });
 
 program.parse();

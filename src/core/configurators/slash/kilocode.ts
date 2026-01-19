@@ -2,11 +2,19 @@ import { SlashCommandConfigurator } from './base.js';
 import { SlashCommandId } from '../../templates/index.js';
 
 const FILE_PATHS: Record<SlashCommandId, string> = {
-    enhance: '.kilocode/workflows/prompter-enhance.md'
+    enhance: '.kilocode/workflows/prompter-enhance.md',
+    'prd-generator': '.kilocode/workflows/prd-generator.md',
+    'epic-single': '.kilocode/workflows/epic-single.md',
+    'story-single': '.kilocode/workflows/story-single.md',
+    'qa-test-scenario': '.kilocode/workflows/qa-test-scenario.md'
 };
 
 const DESCRIPTIONS: Record<SlashCommandId, string> = {
-    enhance: 'Enhance a rough prompt into a professional specification'
+    enhance: 'Enhance a rough prompt into a professional specification',
+    'prd-generator': 'Generate a comprehensive Product Requirements Document (PRD)',
+    'epic-single': 'Generate a single well-defined Jira Epic',
+    'story-single': 'Generate a single Jira User Story from requirements',
+    'qa-test-scenario': 'Generate focused QA test scenarios from PRD'
 };
 
 export class KiloCodeConfigurator extends SlashCommandConfigurator {
