@@ -134,6 +134,31 @@ export class InitCommand {
             }
         }
 
+        // Add missing workflow files for existing tools
+        if (isReInitialization && toolsToKeep.length > 0) {
+            const missingFiles: string[] = [];
+            for (const toolId of toolsToKeep) {
+                const configurator = registry.get(toolId);
+                if (configurator) {
+                    try {
+                        const files = await configurator.generateAll(projectPath);
+                        for (const file of files) {
+                            missingFiles.push(file);
+                        }
+                    } catch (error) {
+                        // Ignore errors for kept tools
+                    }
+                }
+            }
+            
+            if (missingFiles.length > 0) {
+                console.log(chalk.blue('\n📝 Adding missing workflow files...\n'));
+                for (const file of missingFiles) {
+                    console.log(chalk.green('✓') + ` Created ${chalk.cyan(file)}`);
+                }
+            }
+        }
+
         // Show kept tools
         if (isReInitialization && toolsToKeep.length > 0 && (toolsToAdd.length > 0 || toolsToRemove.length > 0)) {
             console.log(chalk.blue('\n✨ Keeping existing tools:\n'));
