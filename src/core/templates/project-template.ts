@@ -1,20 +1,32 @@
 export const projectTemplate = `# Project Context
 
-This file provides context about your project for the Prompter workflow.
+## Purpose
+[Describe your project's purpose and goals]
 
-## Project Overview
+## Tech Stack
+- [List your primary technologies]
+- [e.g., TypeScript, React, Node.js]
 
-<!-- Describe your project here -->
+## Project Conventions
 
-## Technology Stack
+### Code Style
+[Describe your code style preferences, formatting rules, and naming conventions]
 
-<!-- List your preferred technologies -->
+### Architecture Patterns
+[Document your architectural decisions and patterns]
 
-## Conventions
+### Testing Strategy
+[Explain your testing approach and requirements]
 
-<!-- Document any coding conventions or preferences -->
+### Git Workflow
+[Describe your branching strategy and commit conventions]
 
-## Notes
+## Domain Context
+[Add domain-specific knowledge that AI assistants need to understand]
 
-<!-- Any additional context that should influence prompt enhancement -->
+## Important Constraints
+[List any technical, business, or regulatory constraints]
+
+## External Dependencies
+[Document key external services, APIs, or systems]
 `;
