@@ -1,3 +1,4 @@
+$ARGUMENTS
 ---
 description: Generate a comprehensive Product Requirements Document (PRD)
 ---

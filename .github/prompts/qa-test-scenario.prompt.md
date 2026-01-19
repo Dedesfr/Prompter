@@ -1,3 +1,4 @@
+$ARGUMENTS
 ---
 description: Generate focused QA test scenarios from PRD
 ---

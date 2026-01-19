@@ -1,3 +1,4 @@
+$ARGUMENTS
 ---
 description: Generate a single Jira User Story from requirements
 ---

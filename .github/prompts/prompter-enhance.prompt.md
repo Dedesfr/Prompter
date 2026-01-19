@@ -1,3 +1,4 @@
+$ARGUMENTS
 ---
 description: Enhance a rough prompt into a professional specification
 ---

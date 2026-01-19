@@ -1,3 +1,4 @@
+$ARGUMENTS
 ---
 description: Generate a single well-defined Jira Epic
 ---
