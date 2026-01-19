@@ -30,7 +30,7 @@ export class GithubCopilotConfigurator extends SlashCommandConfigurator {
 
     protected getFrontmatter(id: SlashCommandId): string | undefined {
         const description = DESCRIPTIONS[id];
-        return `$ARGUMENTS\n---\ndescription: ${description}\n---`;
+        return `---\ndescription: ${description}\n---`;
     }
 
     async generateAll(projectPath: string): Promise<string[]> {
@@ -52,6 +52,8 @@ export class GithubCopilotConfigurator extends SlashCommandConfigurator {
                 if (frontmatter) {
                     sections.push(frontmatter.trim());
                 }
+                // Add $ARGUMENTS after frontmatter
+                sections.push('$ARGUMENTS');
                 sections.push(`${PROMPTER_MARKERS.start}\n${body}\n${PROMPTER_MARKERS.end}`);
                 const content = sections.join('\n') + '\n';
                 await fs.writeFile(filePath, content, 'utf-8');

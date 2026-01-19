@@ -1,7 +1,7 @@
-$ARGUMENTS
 ---
 description: Generate a single Jira User Story from requirements
 ---
+$ARGUMENTS
 <!-- prompter-managed-start -->
 ### ✅ **Prompt: Generate a Single Jira Story from QA Prompt**
 

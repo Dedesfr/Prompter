@@ -1,7 +1,7 @@
-$ARGUMENTS
 ---
 description: Generate a single well-defined Jira Epic
 ---
+$ARGUMENTS
 <!-- prompter-managed-start -->
 Your job is to take a user requirement and structure it into **a single, well-defined Jira Epic**.
 

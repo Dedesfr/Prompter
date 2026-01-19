@@ -1,7 +1,7 @@
-$ARGUMENTS
 ---
 description: Enhance a rough prompt into a professional specification
 ---
+$ARGUMENTS
 <!-- prompter-managed-start -->
 ## MUST FOLLOW
 - Response Language: {User Request Language}
