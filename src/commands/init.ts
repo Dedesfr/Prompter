@@ -16,10 +16,22 @@ export class InitCommand {
         const projectPath = process.cwd();
         const isReInitialization = await PrompterConfig.prompterDirExists(projectPath);
 
+        // Display ASCII art banner for initial setup
+        if (!isReInitialization) {
+            console.log(chalk.cyan(`
+ ██████  ██████   ██████  ███    ███ ██████  ████████ ███████ ██████  
+ ██   ██ ██   ██ ██    ██ ████  ████ ██   ██    ██    ██      ██   ██ 
+ ██████  ██████  ██    ██ ██ ████ ██ ██████     ██    █████   ██████  
+ ██      ██   ██ ██    ██ ██  ██  ██ ██         ██    ██      ██   ██ 
+ ██      ██   ██  ██████  ██      ██ ██         ██    ███████ ██   ██ 
+`));
+            console.log(chalk.white.bold('Welcome to Prompter!\n'));
+        }
+
         if (isReInitialization) {
             console.log(chalk.blue('\n🔄 Re-configuring Prompter tools...\n'));
         } else {
-            console.log(chalk.blue('\n🚀 Initializing Prompter...\n'));
+            console.log(chalk.blue('🚀 Initializing Prompter...\n'));
         }
 
         // Detect currently configured tools if re-initializing
