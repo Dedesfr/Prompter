@@ -2,15 +2,14 @@ import { Command } from 'commander';
 import { InitCommand } from '../commands/init.js';
 import { UpdateCommand } from '../commands/update.js';
 import { ListCommand } from '../commands/list.js';
-import { PrdGeneratorCommand } from '../commands/prd-generator.js';
-import { SkillCreatorCommand } from '../commands/skill-creator.js';
+import { GuideCommand } from '../commands/guide.js';
 
 const program = new Command();
 
 program
     .name('prompter')
     .description('Enhance prompts directly in your AI coding workflow')
-    .version('0.3.7');
+    .version('0.3.8');
 
 program
     .command('init')
@@ -40,19 +39,11 @@ program
     });
 
 program
-    .command('prd-generator')
-    .description('Generate PRD workflow files for configured AI tools')
-    .action(async (options) => {
-        const prdGeneratorCommand = new PrdGeneratorCommand();
-        await prdGeneratorCommand.execute(options);
-    });
-
-program
-    .command('skill-creator')
-    .description('Generate skill-creator workflow files for configured AI tools')
-    .action(async (options) => {
-        const skillCreatorCommand = new SkillCreatorCommand();
-        await skillCreatorCommand.execute(options);
+    .command('guide')
+    .description('Show setup guide for Prompter')
+    .action(async () => {
+        const guideCommand = new GuideCommand();
+        await guideCommand.execute();
     });
 
 program.parse();
