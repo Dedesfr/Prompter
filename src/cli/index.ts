@@ -3,6 +3,7 @@ import { InitCommand } from '../commands/init.js';
 import { UpdateCommand } from '../commands/update.js';
 import { ListCommand } from '../commands/list.js';
 import { PrdGeneratorCommand } from '../commands/prd-generator.js';
+import { SkillCreatorCommand } from '../commands/skill-creator.js';
 
 const program = new Command();
 
@@ -44,6 +45,14 @@ program
     .action(async (options) => {
         const prdGeneratorCommand = new PrdGeneratorCommand();
         await prdGeneratorCommand.execute(options);
+    });
+
+program
+    .command('skill-creator')
+    .description('Generate skill-creator workflow files for configured AI tools')
+    .action(async (options) => {
+        const skillCreatorCommand = new SkillCreatorCommand();
+        await skillCreatorCommand.execute(options);
     });
 
 program.parse();

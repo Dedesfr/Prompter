@@ -9,7 +9,7 @@ export interface SlashCommandTarget {
     kind: 'slash';
 }
 
-const ALL_COMMANDS: SlashCommandId[] = ['enhance', 'prd-generator', 'epic-single', 'story-single', 'qa-test-scenario'];
+const ALL_COMMANDS: SlashCommandId[] = ['enhance', 'prd-generator', 'epic-single', 'story-single', 'qa-test-scenario', 'skill-creator'];
 
 export abstract class SlashCommandConfigurator {
     abstract readonly toolId: string;

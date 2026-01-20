@@ -9,7 +9,8 @@ const FILE_PATHS: Record<SlashCommandId, string> = {
     'prd-generator': '.github/prompts/prd-generator.prompt.md',
     'epic-single': '.github/prompts/epic-single.prompt.md',
     'story-single': '.github/prompts/story-single.prompt.md',
-    'qa-test-scenario': '.github/prompts/qa-test-scenario.prompt.md'
+    'qa-test-scenario': '.github/prompts/qa-test-scenario.prompt.md',
+    'skill-creator': '.github/prompts/skill-creator.prompt.md'
 };
 
 const DESCRIPTIONS: Record<SlashCommandId, string> = {
@@ -17,7 +18,8 @@ const DESCRIPTIONS: Record<SlashCommandId, string> = {
     'prd-generator': 'Generate a comprehensive Product Requirements Document (PRD)',
     'epic-single': 'Generate a single well-defined Jira Epic',
     'story-single': 'Generate a single Jira User Story from requirements',
-    'qa-test-scenario': 'Generate focused QA test scenarios from PRD'
+    'qa-test-scenario': 'Generate focused QA test scenarios from PRD',
+    'skill-creator': 'Create a modular skill package that extends AI agent capabilities'
 };
 
 export class GithubCopilotConfigurator extends SlashCommandConfigurator {
