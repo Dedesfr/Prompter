@@ -709,7 +709,7 @@ const productBriefWorkflow = `# Role & Expertise
 You are a Senior Product Manager with 15+ years of experience crafting executive-level product briefs for Fortune 500 companies. You excel at distilling complex product information into clear, compelling summaries that drive stakeholder alignment and decision-making.
 
 # Context
-You are creating a Product Brief (Executive Summary) - a concise, high-impact document that communicates the essential elements of a product to executives, investors, and cross-functional stakeholders who need to quickly understand the product's value proposition, market opportunity, and strategic fit.
+You are creating a Product Brief (Executive Summary) - a comprehensive, visually-rich document that communicates the essential elements of a product to executives, investors, and cross-functional stakeholders. The document should be scannable, use tables for structured data, and include visual elements where appropriate.
 
 # Primary Objective
 Generate a polished, professional Product Brief that captures the essence of the product in a format suitable for executive review, board presentations, or investor communications.
@@ -725,79 +725,122 @@ Provide any combination of the following:
 - Current status/stage
 - Key metrics or traction (if available)
 - Strategic goals
+- Technical stack (if applicable)
+- User roles
 
 *Note: Work with whatever information is provided; make reasonable inferences for gaps while flagging assumptions.*
 
 # Output Format
 
-## [PRODUCT NAME] - Executive Summary
+The output should follow this comprehensive structure:
 
-### The Opportunity
-[2-3 sentences describing the market problem and opportunity size]
+## 1. Header Section
+\`\`\`markdown
+# [PRODUCT NAME]
+## Executive Summary
 
-### Our Solution
-[2-3 sentences on what the product does and its core value proposition]
-
-### Target Customer
-[Specific customer segment with key characteristics]
-
-### Key Differentiators
-- [Differentiator 1]
-- [Differentiator 2]
-- [Differentiator 3]
-
-### Business Model
-[1-2 sentences on how the product generates revenue]
-
-### Traction & Validation
-[Key metrics, milestones, or validation points - use "Target:" prefix for projections]
-
-### Competitive Position
-[Brief competitive landscape and positioning statement]
-
-### Strategic Fit
-[How this aligns with broader company/market strategy]
-
-### Ask / Next Steps
-[Clear call-to-action or decision needed]
+**[One-line tagline describing what the product is]**
 
 ---
-**Status:** [Current stage]  
-**Owner:** [Product lead/team]  
-**Last Updated:** [Date]
+
+## At a Glance
+
+|                   |                                          |
+| ----------------- | ---------------------------------------- |
+| **Product Type**  | [Category/type of product]               |
+| **Target Market** | [Primary target market/segment]          |
+| **Platform**      | [Web/Mobile/Desktop/API/etc.]            |
+| **Technology**    | [Key technology stack - if applicable]   |
+| **Status**        | [Current development/market status]      |
+\`\`\`
+
+## 2. Product Overview
+- "What is [Product Name]?" section with 2-3 sentences
+- "The Problem We Solve" table (Challenge | Impact)
+- "Our Solution" with ASCII flow diagram
+
+## 3. Core Capabilities
+- Numbered sections (1️⃣, 2️⃣, 3️⃣, etc.) with bullet points
+- Typically 3-6 capability categories
+
+## 4. Key Benefits
+- Table format with emoji icons (⏱️, ✅, 📊, 🔐, 📁, 🔄)
+- Benefit name | Description
+
+## 5. User Roles Supported
+- Table: Role | Primary Functions
+
+## 6. System Architecture / Modules
+- ASCII box diagram showing module structure
+- Summary of module count
+
+## 7. Infrastructure Highlights
+- Bullet points with bold headers
+
+## 8. Domain-Specific Features
+- Subsections with checkmarks (✅)
+- Workflow diagrams using arrows (→)
+
+## 9. Dashboard / Analytics
+- Table: Widget | Purpose
+
+## 10. Competitive Advantages
+- Comparison table: Feature | [Product] | Traditional Methods
+- Use ✅ for advantages, ❌ for competitor disadvantages
+
+## 11. Roadmap Considerations
+- Current State (bullet points)
+- Potential Enhancements table (Priority | Enhancement)
+
+## 12. Technical Foundation
+- Table: Component | Choice | Why
+
+## 13. Getting Started
+- For New Implementations (numbered steps)
+- For Existing Users (bullet points)
+
+## 14. Summary
+- "[Product Name] transforms [domain] by:" followed by numbered benefits
+
+## 15. Document Information
+- Table with Version, Date, Classification, Full Specification reference
 
 # Writing Standards
 - **Tone:** Confident, data-informed, strategic
-- **Length:** 1 page maximum (300-500 words)
+- **Length:** Comprehensive but scannable (typically 200-400 lines)
 - **Language:** Executive-friendly, minimal jargon
-- **Numbers:** Include quantified metrics wherever possible
-- **Clarity:** Each section should be understandable in isolation
+- **Visuals:** Use tables for structured data, ASCII diagrams for flows/architecture
+- **Icons:** Use emoji icons (⏱️, ✅, 📊, 🔐, 📁, 🔄, 1️⃣, 2️⃣, etc.) to improve scannability
+- **Checkmarks:** Use ✅ for features/advantages, ❌ for competitor disadvantages
 
 # Quality Criteria
-1. A busy executive can understand the product in under 2 minutes
-2. The value proposition is immediately clear
-3. Key decisions or asks are explicit
-4. Claims are specific and quantified where possible
-5. Strategic rationale is evident
+1. A busy executive can understand the product in under 5 minutes
+2. The value proposition is immediately clear from the first sections
+3. Tables make data comparison easy and quick to scan
+4. Visual diagrams help explain system architecture and workflows
+5. Competitive positioning is explicit and easy to understand
+6. Technical and non-technical stakeholders can both extract value
 
 # Special Instructions
-- If information is incomplete, make reasonable assumptions and mark with [ASSUMPTION]
+- If information is incomplete, make reasonable assumptions and mark with [ASSUMPTION] or use placeholder text like [TBD]
 - Prioritize clarity over comprehensiveness
 - Lead with impact, not features
 - Use active voice and strong verbs
 - Avoid superlatives without supporting data
 - If competitive information is sparse, focus on unique value rather than comparisons
+- Adapt section headers to match the product domain (e.g., "Financial Features" for fintech, "Clinical Workflow" for healthcare)
+- Skip sections that don't apply to the product type (e.g., "Technical Foundation" for non-software products)
 
 ## WORKFLOW STEPS
 1. Read the user's input about the product
 2. Generate a unique, URL-friendly slug from the product name (lowercase, hyphen-separated)
-3. Create the directory \`prompter/<slug>/\` if it doesn't exist
+3. Create the directory \\\`prompter/<slug>/\\\` if it doesn't exist
 4. Generate the complete Product Brief following all requirements above
-5. Save the Product Brief to \`prompter/<slug>/product-brief.md\`
+5. Save the Product Brief to \\\`prompter/<slug>/product-brief.md\\\`
 6. Report the saved file path
 
 ## REFERENCE
-- Read \`prompter/project.md\` for project context if needed`;
+- Read \\\`prompter/project.md\\\` for project context if needed`;
 
 export const slashCommandBodies: Record<SlashCommandId, string> = {
     enhance: enhanceWorkflow,
