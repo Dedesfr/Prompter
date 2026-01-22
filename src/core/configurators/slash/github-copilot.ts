@@ -7,6 +7,7 @@ import { PROMPTER_MARKERS } from '../../config.js';
 const FILE_PATHS: Record<SlashCommandId, string> = {
     enhance: '.github/prompts/prompter-enhance.prompt.md',
     'prd-generator': '.github/prompts/prd-generator.prompt.md',
+    'prd-agent-generator': '.github/prompts/prd-agent-generator.prompt.md',
     'product-brief': '.github/prompts/product-brief.prompt.md',
     'epic-single': '.github/prompts/epic-single.prompt.md',
     'story-single': '.github/prompts/story-single.prompt.md',
@@ -18,6 +19,7 @@ const FILE_PATHS: Record<SlashCommandId, string> = {
 const DESCRIPTIONS: Record<SlashCommandId, string> = {
     enhance: 'Enhance a rough prompt into a professional specification',
     'prd-generator': 'Generate a comprehensive Product Requirements Document (PRD)',
+    'prd-agent-generator': 'Generate a PRD with autonomous assumptions (non-interactive mode)',
     'product-brief': 'Generate an executive-level product brief (1-page summary)',
     'epic-single': 'Generate a single well-defined Jira Epic',
     'story-single': 'Generate a single Jira User Story from requirements',

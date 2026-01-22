@@ -4,6 +4,7 @@ import { SlashCommandId } from '../../templates/index.js';
 const FILE_PATHS: Record<SlashCommandId, string> = {
     enhance: '.kilocode/workflows/prompter-enhance.md',
     'prd-generator': '.kilocode/workflows/prd-generator.md',
+    'prd-agent-generator': '.kilocode/workflows/prd-agent-generator.md',
     'product-brief': '.kilocode/workflows/product-brief.md',
     'epic-single': '.kilocode/workflows/epic-single.md',
     'story-single': '.kilocode/workflows/story-single.md',
@@ -15,6 +16,7 @@ const FILE_PATHS: Record<SlashCommandId, string> = {
 const DESCRIPTIONS: Record<SlashCommandId, string> = {
     enhance: 'Enhance a rough prompt into a professional specification',
     'prd-generator': 'Generate a comprehensive Product Requirements Document (PRD)',
+    'prd-agent-generator': 'Generate a PRD with autonomous assumptions (non-interactive mode)',
     'product-brief': 'Generate an executive-level product brief (1-page summary)',
     'epic-single': 'Generate a single well-defined Jira Epic',
     'story-single': 'Generate a single Jira User Story from requirements',

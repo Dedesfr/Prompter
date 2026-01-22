@@ -3,14 +3,13 @@ import { InitCommand } from '../commands/init.js';
 import { UpdateCommand } from '../commands/update.js';
 import { ListCommand } from '../commands/list.js';
 import { GuideCommand } from '../commands/guide.js';
-import { AiHumanizerCommand } from '../commands/ai-humanizer.js';
 
 const program = new Command();
 
 program
     .name('prompter')
     .description('Enhance prompts directly in your AI coding workflow')
-    .version('0.4.2');
+    .version('0.4.3');
 
 program
     .command('init')
@@ -45,16 +44,6 @@ program
     .action(async () => {
         const guideCommand = new GuideCommand();
         await guideCommand.execute();
-    });
-
-program
-    .command('ai-humanizer')
-    .description('Generate AI humanizer workflow files for configured tools')
-    .option('--tools <tools...>', 'Specify AI tools to generate for')
-    .option('--no-interactive', 'Run without interactive prompts')
-    .action(async (options) => {
-        const aiHumanizerCommand = new AiHumanizerCommand();
-        await aiHumanizerCommand.execute(options);
     });
 
 program.parse();
