@@ -2,12 +2,18 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import chalk from 'chalk';
 import { checkbox } from '@inquirer/prompts';
-import { PROMPTER_DIR, SUPPORTED_TOOLS, PrompterConfig } from '../core/config.js';
+import { PROMPTER_DIR, SUPPORTED_TOOLS, AVAILABLE_PROMPTS, PrompterConfig } from '../core/config.js';
 import { projectTemplate, agentsTemplate } from '../core/templates/index.js';
 import { registry } from '../core/configurators/slash/index.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 interface InitOptions {
     tools?: string[];
+    prompts?: string[];
     noInteractive?: boolean;
 }
 
@@ -78,6 +84,33 @@ export class InitCommand {
             selectedTools = currentTools;
         }
 
+        // Select prompts
+        let selectedPrompts: string[] = [];
+
+        if (options.prompts && options.prompts.length > 0) {
+            selectedPrompts = options.prompts;
+        } else if (!options.noInteractive) {
+            try {
+                // Detect currently installed prompts (use path.join to get prompter path)
+                const prompterPathForDetection = path.join(projectPath, PROMPTER_DIR);
+                const currentPrompts = await this.detectInstalledPrompts(prompterPathForDetection);
+                
+                selectedPrompts = await checkbox({
+                    message: 'Select prompt templates to install:',
+                    choices: AVAILABLE_PROMPTS.map(prompt => ({
+                        name: `${prompt.name} - ${chalk.gray(prompt.description)}`,
+                        value: prompt.value,
+                        checked: currentPrompts.includes(prompt.value)
+                    })),
+                    pageSize: 15
+                });
+            } catch (error) {
+                // User cancelled
+                console.log(chalk.yellow(isReInitialization ? '\nRe-configuration cancelled.' : '\nInitialization cancelled.'));
+                return;
+            }
+        }
+
         // Create or ensure prompter directory
         const prompterPath = await PrompterConfig.ensurePrompterDir(projectPath);
         if (!isReInitialization) {
@@ -109,6 +142,13 @@ export class InitCommand {
         const toolsToRemove = currentTools.filter(t => !selectedTools.includes(t));
         const toolsToKeep = selectedTools.filter(t => currentTools.includes(t));
 
+        // Handle prompt changes
+        const prompterPathForDetection = path.join(projectPath, PROMPTER_DIR);
+        const currentPrompts = await this.detectInstalledPrompts(prompterPathForDetection);
+        const promptsToAdd = selectedPrompts.filter(p => !currentPrompts.includes(p));
+        const promptsToRemove = currentPrompts.filter(p => !selectedPrompts.includes(p));
+        const promptsToKeep = selectedPrompts.filter(p => currentPrompts.includes(p));
+
         // Remove old tool files
         if (toolsToRemove.length > 0) {
             console.log(chalk.blue('\n🗑️  Removing workflow files...\n'));
@@ -124,6 +164,15 @@ export class InitCommand {
                         console.log(chalk.red('✗') + ` Failed to remove files for ${toolId}: ${error}`);
                     }
                 }
+            }
+        }
+
+        // Remove unchecked prompts
+        if (promptsToRemove.length > 0) {
+            console.log(chalk.blue('\n🗑️  Removing prompt templates...\n'));
+            const removedPrompts = await this.removePrompts(prompterPath, promptsToRemove);
+            for (const promptName of removedPrompts) {
+                console.log(chalk.yellow('✓') + ` Removed ${chalk.cyan(promptName)}`);
             }
         }
 
@@ -182,21 +231,42 @@ export class InitCommand {
             }
         }
 
+        // Install new prompts
+        if (promptsToAdd.length > 0) {
+            console.log(chalk.blue('\n📋 Installing prompt templates...\n'));
+            const installedPrompts = await this.installPrompts(projectPath, prompterPath, promptsToAdd);
+            for (const promptName of installedPrompts) {
+                console.log(chalk.green('✓') + ` Installed ${chalk.cyan(promptName)}`);
+            }
+        }
+
         // Success message
         if (isReInitialization) {
             console.log(chalk.green('\n✅ Prompter tools updated successfully!\n'));
-            if (toolsToAdd.length > 0 || toolsToRemove.length > 0) {
+            if (toolsToAdd.length > 0 || toolsToRemove.length > 0 || promptsToAdd.length > 0 || promptsToRemove.length > 0) {
                 console.log(chalk.blue('Summary:'));
                 if (toolsToAdd.length > 0) {
-                    console.log(chalk.green('  Added: ') + toolsToAdd.map(t => {
+                    console.log(chalk.green('  Tools Added: ') + toolsToAdd.map(t => {
                         const tool = SUPPORTED_TOOLS.find(st => st.value === t);
                         return tool ? tool.name : t;
                     }).join(', '));
                 }
                 if (toolsToRemove.length > 0) {
-                    console.log(chalk.yellow('  Removed: ') + toolsToRemove.map(t => {
+                    console.log(chalk.yellow('  Tools Removed: ') + toolsToRemove.map(t => {
                         const tool = SUPPORTED_TOOLS.find(st => st.value === t);
                         return tool ? tool.name : t;
+                    }).join(', '));
+                }
+                if (promptsToAdd.length > 0) {
+                    console.log(chalk.green('  Prompts Added: ') + promptsToAdd.map(p => {
+                        const prompt = AVAILABLE_PROMPTS.find(ap => ap.value === p);
+                        return prompt ? prompt.name : p;
+                    }).join(', '));
+                }
+                if (promptsToRemove.length > 0) {
+                    console.log(chalk.yellow('  Prompts Removed: ') + promptsToRemove.map(p => {
+                        const prompt = AVAILABLE_PROMPTS.find(ap => ap.value === p);
+                        return prompt ? prompt.name : p;
                     }).join(', '));
                 }
                 console.log();
@@ -205,6 +275,9 @@ export class InitCommand {
             }
         } else {
             console.log(chalk.green('\n✅ Prompter initialized successfully!\n'));
+            if (promptsToAdd.length > 0) {
+                console.log(chalk.gray(`Installed ${promptsToAdd.length} prompt template(s).\n`));
+            }
             console.log(chalk.gray('Run `prompter guide` for next steps.\n'));
         }
     }
@@ -276,5 +349,74 @@ export class InitCommand {
         } catch {
             // Directory doesn't exist or can't be removed, ignore
         }
+    }
+
+    private async detectInstalledPrompts(prompterPath: string): Promise<string[]> {
+        const installedPrompts: string[] = [];
+        
+        for (const prompt of AVAILABLE_PROMPTS) {
+            const promptFilePath = path.join(prompterPath, prompt.sourceFile);
+            if (await this.fileExists(promptFilePath)) {
+                installedPrompts.push(prompt.value);
+            }
+        }
+        
+        return installedPrompts;
+    }
+
+    private async installPrompts(projectPath: string, prompterPath: string, selectedPrompts: string[]): Promise<string[]> {
+        const installedPrompts: string[] = [];
+        
+        // Get the path to the prompt templates directory
+        // In production: node_modules/prompter/prompt/
+        // In development: prompt/
+        const promptSourceDir = path.join(__dirname, '../../prompt');
+        
+        for (const promptId of selectedPrompts) {
+            const prompt = AVAILABLE_PROMPTS.find(p => p.value === promptId);
+            if (!prompt) continue;
+            
+            const sourcePath = path.join(promptSourceDir, prompt.sourceFile);
+            const destPath = path.join(prompterPath, prompt.sourceFile);
+            
+            try {
+                // Check if source file exists
+                if (!await this.fileExists(sourcePath)) {
+                    console.log(chalk.yellow(`  Warning: Source file not found for ${prompt.name}`));
+                    continue;
+                }
+                
+                // Copy the prompt file
+                const content = await fs.readFile(sourcePath, 'utf-8');
+                await fs.writeFile(destPath, content, 'utf-8');
+                installedPrompts.push(prompt.name);
+            } catch (error) {
+                console.log(chalk.red(`  Error installing ${prompt.name}: ${error}`));
+            }
+        }
+        
+        return installedPrompts;
+    }
+
+    private async removePrompts(prompterPath: string, promptsToRemove: string[]): Promise<string[]> {
+        const removedPrompts: string[] = [];
+        
+        for (const promptId of promptsToRemove) {
+            const prompt = AVAILABLE_PROMPTS.find(p => p.value === promptId);
+            if (!prompt) continue;
+            
+            const filePath = path.join(prompterPath, prompt.sourceFile);
+            
+            try {
+                if (await this.fileExists(filePath)) {
+                    await fs.unlink(filePath);
+                    removedPrompts.push(prompt.name);
+                }
+            } catch (error) {
+                console.log(chalk.red(`  Error removing ${prompt.name}: ${error}`));
+            }
+        }
+        
+        return removedPrompts;
     }
 }
