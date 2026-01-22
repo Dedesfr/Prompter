@@ -41,10 +41,10 @@ export class GithubCopilotConfigurator extends SlashCommandConfigurator {
         return `---\ndescription: ${description}\n---`;
     }
 
-    async generateAll(projectPath: string): Promise<string[]> {
+    async generateAll(projectPath: string, filterIds?: SlashCommandId[]): Promise<string[]> {
         const createdOrUpdated: string[] = [];
 
-        for (const target of this.getTargets()) {
+        for (const target of this.getTargets(filterIds)) {
             const body = this.getBody(target.id);
             const filePath = path.join(projectPath, target.path);
 

@@ -4,12 +4,9 @@ import chalk from 'chalk';
 import { checkbox } from '@inquirer/prompts';
 import { PROMPTER_DIR, SUPPORTED_TOOLS, AVAILABLE_PROMPTS, PrompterConfig } from '../core/config.js';
 import { projectTemplate, agentsTemplate } from '../core/templates/index.js';
+import { PROMPT_TEMPLATES } from '../core/prompt-templates.js';
 import { registry } from '../core/configurators/slash/index.js';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { SlashCommandId } from '../core/templates/index.js';
 
 interface InitOptions {
     tools?: string[];
@@ -57,7 +54,8 @@ export class InitCommand {
         let selectedTools: string[] = [];
 
         if (options.tools && options.tools.length > 0) {
-            selectedTools = options.tools;
+            // Handle comma-separated values in a single string or array of strings
+            selectedTools = options.tools.flatMap(tool => tool.split(',').map(t => t.trim()));
         } else if (!options.noInteractive) {
             try {
                 const message = isReInitialization 
@@ -88,7 +86,8 @@ export class InitCommand {
         let selectedPrompts: string[] = [];
 
         if (options.prompts && options.prompts.length > 0) {
-            selectedPrompts = options.prompts;
+            // Handle comma-separated values in a single string or array of strings
+            selectedPrompts = options.prompts.flatMap(prompt => prompt.split(',').map(p => p.trim()));
         } else if (!options.noInteractive) {
             try {
                 // Detect currently installed prompts (use path.join to get prompter path)
@@ -170,21 +169,31 @@ export class InitCommand {
         // Remove unchecked prompts
         if (promptsToRemove.length > 0) {
             console.log(chalk.blue('\n🗑️  Removing prompt templates...\n'));
+            
+            // Remove from prompter/ folder
             const removedPrompts = await this.removePrompts(prompterPath, promptsToRemove);
             for (const promptName of removedPrompts) {
                 console.log(chalk.yellow('✓') + ` Removed ${chalk.cyan(promptName)}`);
             }
+            
+            // Remove workflow files from all configured tools
+            await this.removeWorkflowFilesForPrompts(projectPath, currentTools, promptsToRemove);
         }
 
         // Generate workflow files for new tools
         if (toolsToAdd.length > 0) {
             console.log(chalk.blue('\n📝 Creating workflow files...\n'));
 
+            // Convert selected prompt values to SlashCommandIds
+            const slashCommandIds: SlashCommandId[] = selectedPrompts as SlashCommandId[];
+
             for (const toolId of toolsToAdd) {
                 const configurator = registry.get(toolId);
                 if (configurator) {
                     try {
-                        const files = await configurator.generateAll(projectPath);
+                        // Pass selected prompts to only generate those workflow files
+                        // Pass empty array if no prompts selected to generate nothing
+                        const files = await configurator.generateAll(projectPath, slashCommandIds);
                         for (const file of files) {
                             console.log(chalk.green('✓') + ` Created ${chalk.cyan(file)}`);
                         }
@@ -198,11 +207,17 @@ export class InitCommand {
         // Add missing workflow files for existing tools
         if (isReInitialization && toolsToKeep.length > 0) {
             const missingFiles: string[] = [];
+            
+            // Convert selected prompt values to SlashCommandIds
+            const slashCommandIds: SlashCommandId[] = selectedPrompts as SlashCommandId[];
+            
             for (const toolId of toolsToKeep) {
                 const configurator = registry.get(toolId);
                 if (configurator) {
                     try {
-                        const files = await configurator.generateAll(projectPath);
+                        // Pass selected prompts to only generate those workflow files
+                        // Pass empty array if no prompts selected to generate nothing
+                        const files = await configurator.generateAll(projectPath, slashCommandIds);
                         for (const file of files) {
                             missingFiles.push(file);
                         }
@@ -353,9 +368,10 @@ export class InitCommand {
 
     private async detectInstalledPrompts(prompterPath: string): Promise<string[]> {
         const installedPrompts: string[] = [];
+        const corePath = path.join(prompterPath, 'core');
         
         for (const prompt of AVAILABLE_PROMPTS) {
-            const promptFilePath = path.join(prompterPath, prompt.sourceFile);
+            const promptFilePath = path.join(corePath, prompt.sourceFile);
             if (await this.fileExists(promptFilePath)) {
                 installedPrompts.push(prompt.value);
             }
@@ -366,28 +382,27 @@ export class InitCommand {
 
     private async installPrompts(projectPath: string, prompterPath: string, selectedPrompts: string[]): Promise<string[]> {
         const installedPrompts: string[] = [];
+        const corePath = path.join(prompterPath, 'core');
         
-        // Get the path to the prompt templates directory
-        // In production: node_modules/prompter/prompt/
-        // In development: prompt/
-        const promptSourceDir = path.join(__dirname, '../../prompt');
+        // Ensure core directory exists
+        await fs.mkdir(corePath, { recursive: true });
         
         for (const promptId of selectedPrompts) {
             const prompt = AVAILABLE_PROMPTS.find(p => p.value === promptId);
             if (!prompt) continue;
             
-            const sourcePath = path.join(promptSourceDir, prompt.sourceFile);
-            const destPath = path.join(prompterPath, prompt.sourceFile);
+            const destPath = path.join(corePath, prompt.sourceFile);
             
             try {
-                // Check if source file exists
-                if (!await this.fileExists(sourcePath)) {
-                    console.log(chalk.yellow(`  Warning: Source file not found for ${prompt.name}`));
+                // Get template content from embedded templates
+                const content = PROMPT_TEMPLATES[promptId];
+                
+                if (!content) {
+                    console.log(chalk.yellow(`  Warning: Template not found for ${prompt.name}`));
                     continue;
                 }
                 
-                // Copy the prompt file
-                const content = await fs.readFile(sourcePath, 'utf-8');
+                // Write the prompt file from embedded template
                 await fs.writeFile(destPath, content, 'utf-8');
                 installedPrompts.push(prompt.name);
             } catch (error) {
@@ -400,12 +415,13 @@ export class InitCommand {
 
     private async removePrompts(prompterPath: string, promptsToRemove: string[]): Promise<string[]> {
         const removedPrompts: string[] = [];
+        const corePath = path.join(prompterPath, 'core');
         
         for (const promptId of promptsToRemove) {
             const prompt = AVAILABLE_PROMPTS.find(p => p.value === promptId);
             if (!prompt) continue;
             
-            const filePath = path.join(prompterPath, prompt.sourceFile);
+            const filePath = path.join(corePath, prompt.sourceFile);
             
             try {
                 if (await this.fileExists(filePath)) {
@@ -418,5 +434,33 @@ export class InitCommand {
         }
         
         return removedPrompts;
+    }
+
+    private async removeWorkflowFilesForPrompts(projectPath: string, toolIds: string[], promptIds: string[]): Promise<void> {
+        const slashCommandIds: SlashCommandId[] = promptIds as SlashCommandId[];
+        
+        for (const toolId of toolIds) {
+            const configurator = registry.get(toolId);
+            if (!configurator) continue;
+            
+            // Get targets for the prompts to remove
+            const targets = configurator.getTargets(slashCommandIds);
+            
+            for (const target of targets) {
+                const filePath = path.join(projectPath, target.path);
+                
+                try {
+                    if (await this.fileExists(filePath)) {
+                        await fs.unlink(filePath);
+                        console.log(chalk.yellow('✓') + ` Removed ${chalk.cyan(target.path)}`);
+                        
+                        // Remove empty parent directories
+                        await this.removeEmptyDirs(path.dirname(filePath), projectPath);
+                    }
+                } catch (error) {
+                    // Silently ignore errors for workflow file removal
+                }
+            }
+        }
     }
 }

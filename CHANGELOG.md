@@ -1,5 +1,35 @@
 # CHANGELOG
 
+## [0.6.0] - 2026-01-22
+
+### ✨ Added
+- **Core Folder Organization**: Prompt templates now organized in `prompter/core/` subfolder
+  - Cleaner separation between project configuration and prompt templates
+  - `prompter/project.md` remains at root level
+  - All prompt templates stored in `prompter/core/` directory
+
+### 🐛 Fixed
+- **Embedded Prompt Templates**: All prompt templates now embedded in package
+  - No longer depends on external prompt files
+  - Works correctly in any project directory
+  - Templates always available after global installation
+- **Selective Workflow Generation**: Only selected prompts are generated
+  - Previously generated all workflows regardless of selection
+  - Now respects user selection in both interactive and CLI modes
+  - Applies to all supported AI tools (GitHub Copilot, Antigravity, Claude Code, Codex, OpenCode, Kilo Code)
+- **Workflow File Removal**: Prompt removal now works across all directories
+  - Removes workflow files from AI tool directories (.github/prompts/, .agent/workflows/, etc.)
+  - Previously only removed from prompter directory
+  - Proper cleanup of empty directories
+- **Empty Selection Handling**: Unchecking all prompts now generates nothing
+  - Previously generated all prompts when none selected
+  - Now correctly interprets empty selection as no prompts wanted
+
+### 🔄 Changed
+- **Prompt Directory Structure**: Reorganized prompter folder layout
+  - Old: `prompter/*.md`
+  - New: `prompter/core/*.md` for templates, `prompter/project.md` at root
+
 ## [0.5.1] - 2026-01-22
 
 ### ✨ Added

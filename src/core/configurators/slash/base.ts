@@ -15,18 +15,25 @@ export abstract class SlashCommandConfigurator {
     abstract readonly toolId: string;
     abstract readonly isAvailable: boolean;
 
-    getTargets(): SlashCommandTarget[] {
-        return ALL_COMMANDS.map((id) => ({
+    getTargets(filterIds?: SlashCommandId[]): SlashCommandTarget[] {
+        // If filterIds is undefined, generate all commands
+        // If filterIds is an empty array, generate nothing
+        // If filterIds has items, generate only those
+        const commandsToGenerate = filterIds === undefined
+            ? ALL_COMMANDS
+            : ALL_COMMANDS.filter(id => filterIds.includes(id));
+            
+        return commandsToGenerate.map((id) => ({
             id,
             path: this.getRelativePath(id),
             kind: 'slash'
         }));
     }
 
-    async generateAll(projectPath: string): Promise<string[]> {
+    async generateAll(projectPath: string, filterIds?: SlashCommandId[]): Promise<string[]> {
         const createdOrUpdated: string[] = [];
 
-        for (const target of this.getTargets()) {
+        for (const target of this.getTargets(filterIds)) {
             const body = this.getBody(target.id);
             const filePath = path.join(projectPath, target.path);
 
