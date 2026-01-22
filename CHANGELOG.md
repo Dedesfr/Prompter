@@ -1,5 +1,117 @@
 # CHANGELOG
 
+## [0.5.0] - 2026-01-22
+
+### ✨ Added
+- **Prompt Installation & Management**: New system for installing and managing workflow prompts
+  - Install prompts from templates
+  - Manage existing prompt workflows
+  - Centralized prompt management system
+
+## [0.4.3] - 2026-01-22
+
+### ✨ Added
+- **PRD Agent Generator**: New command and workflow support
+  - Generate PRD (Product Requirements Document) agents
+  - Automated workflow creation for PRD generation
+  - Integration with AI tools for PRD creation
+
+## [0.4.2] - 2026-01-21
+
+### ✨ Added
+- **AI Humanizer**: New command and workflow support
+  - Humanize AI-generated content
+  - Make AI text more natural and conversational
+  - Workflow integration for content improvement
+
+## [0.4.1] - 2026-01-21
+
+### 🔄 Changed
+- **Enhanced Product Brief Template**: Comprehensive structure improvements
+  - More detailed product brief sections
+  - Better organization and clarity
+  - Improved guidance for product documentation
+
+## [0.4.0] - 2026-01-21
+
+### ✨ Added
+- **Product Brief Command**: New workflow support for product documentation
+  - Generate product briefs using AI workflows
+  - Structured product documentation templates
+  - Integration with AI coding tools
+
+## [0.3.9] - 2026-01-21
+
+### ✨ Added
+- **ASCII Art Banner**: Welcome message during initial setup
+  - Visual branding during `prompter init`
+  - Improved first-run experience
+
+## [0.3.8] - 2026-01-21
+
+### ✨ Added
+- **Guide Command**: New command for documentation and help
+  - Interactive guide for using Prompter
+  - Documentation assistance
+  - Usage examples and tips
+
+## [0.3.7] - 2026-01-21
+
+### ✨ Added
+- **Skill Creator Command**: New workflow for creating skills
+  - Generate skill definitions
+  - Workflow files for skill creation
+  - Integration with AI tools for skill development
+
+## [0.3.6] - 2026-01-20
+
+### 🔧 Technical
+- CLI version synchronization with package version
+- Improved version consistency across the codebase
+
+## [0.3.5] - 2026-01-20
+
+### 🐛 Fixed
+- Updated CLI version display to match package version
+
+## [0.3.4] - 2026-01-20
+
+### 🔄 Changed
+- Improved next steps message for `project.md` clarity
+- Enhanced project template with structured sections
+
+## [0.3.3] - 2026-01-20
+
+### 🐛 Fixed
+- **GitHub Copilot Format**: Corrected workflow file format
+  - Use `.prompt.md` extension instead of `.md`
+  - Add `$ARGUMENTS` placeholder after frontmatter
+  - Fixed `$ARGUMENTS` position in template
+
+## [0.3.2] - 2026-01-19
+
+### 🐛 Fixed
+- **Update Command Enhancement**: Now detects configured tools automatically
+  - Adds missing workflow files during update
+  - Intelligent tool detection from existing workflows
+
+## [0.3.1] - 2026-01-19
+
+### 🐛 Fixed
+- **Re-init Support**: Ensure missing workflow files are added during re-initialization
+  - Automatically detect and create missing workflows
+  - Safe re-initialization without data loss
+
+## [0.3.0] - 2026-01-19
+
+### ✨ Added
+- **New Workflows**: Added support for multiple project management workflows
+  - PRD (Product Requirements Document) workflow
+  - Epic workflow for large features
+  - Story workflow for user stories
+  - QA test scenario workflow
+  - Comprehensive project planning support
+
 ## [0.2.0] - 2026-01-19
 
 ### ✨ Added
