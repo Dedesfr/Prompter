@@ -8,7 +8,8 @@ const FILE_PATHS: Record<SlashCommandId, string> = {
     'epic-single': '.codex/prompts/epic-single.md',
     'story-single': '.codex/prompts/story-single.md',
     'qa-test-scenario': '.codex/prompts/qa-test-scenario.md',
-    'skill-creator': '.codex/prompts/skill-creator.md'
+    'skill-creator': '.codex/prompts/skill-creator.md',
+    'ai-humanizer': '.codex/prompts/ai-humanizer.md'
 };
 
 const DESCRIPTIONS: Record<SlashCommandId, string> = {
@@ -18,7 +19,8 @@ const DESCRIPTIONS: Record<SlashCommandId, string> = {
     'epic-single': 'Generate a single well-defined Jira Epic',
     'story-single': 'Generate a single Jira User Story from requirements',
     'qa-test-scenario': 'Generate focused QA test scenarios from PRD',
-    'skill-creator': 'Create a modular skill package that extends AI agent capabilities'
+    'skill-creator': 'Create a modular skill package that extends AI agent capabilities',
+    'ai-humanizer': 'Humanize and proofread AI-generated content for natural, publication-ready output'
 };
 
 export class CodexConfigurator extends SlashCommandConfigurator {

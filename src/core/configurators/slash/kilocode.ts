@@ -8,7 +8,8 @@ const FILE_PATHS: Record<SlashCommandId, string> = {
     'epic-single': '.kilocode/workflows/epic-single.md',
     'story-single': '.kilocode/workflows/story-single.md',
     'qa-test-scenario': '.kilocode/workflows/qa-test-scenario.md',
-    'skill-creator': '.kilocode/workflows/skill-creator.md'
+    'skill-creator': '.kilocode/workflows/skill-creator.md',
+    'ai-humanizer': '.kilocode/workflows/ai-humanizer.md'
 };
 
 const DESCRIPTIONS: Record<SlashCommandId, string> = {
@@ -18,7 +19,8 @@ const DESCRIPTIONS: Record<SlashCommandId, string> = {
     'epic-single': 'Generate a single well-defined Jira Epic',
     'story-single': 'Generate a single Jira User Story from requirements',
     'qa-test-scenario': 'Generate focused QA test scenarios from PRD',
-    'skill-creator': 'Create a modular skill package that extends AI agent capabilities'
+    'skill-creator': 'Create a modular skill package that extends AI agent capabilities',
+    'ai-humanizer': 'Humanize and proofread AI-generated content for natural, publication-ready output'
 };
 
 export class KiloCodeConfigurator extends SlashCommandConfigurator {
