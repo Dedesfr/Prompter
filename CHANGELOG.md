@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [0.5.1] - 2026-01-22
+
+### ✨ Added
+- **Upgrade Command**: New command for self-updating Prompter
+  - Run `prompter upgrade` to update to the latest version
+  - Automatically executes `npm install -g @dedesfr/prompter@latest`
+  - Cross-platform support (Windows, macOS, Linux)
+  - Clear success/error feedback
+  - Fallback instructions if upgrade fails
+
 ## [0.5.0] - 2026-01-22
 
 ### ✨ Added

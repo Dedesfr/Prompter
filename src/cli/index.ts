@@ -3,13 +3,14 @@ import { InitCommand } from '../commands/init.js';
 import { UpdateCommand } from '../commands/update.js';
 import { ListCommand } from '../commands/list.js';
 import { GuideCommand } from '../commands/guide.js';
+import { UpgradeCommand } from '../commands/upgrade.js';
 
 const program = new Command();
 
 program
     .name('prompter')
     .description('Enhance prompts directly in your AI coding workflow')
-    .version('0.5.0');
+    .version('0.5.1');
 
 program
     .command('init')
@@ -45,6 +46,14 @@ program
     .action(async () => {
         const guideCommand = new GuideCommand();
         await guideCommand.execute();
+    });
+
+program
+    .command('upgrade')
+    .description('Upgrade Prompter to the latest version')
+    .action(async () => {
+        const upgradeCommand = new UpgradeCommand();
+        await upgradeCommand.execute();
     });
 
 program.parse();
