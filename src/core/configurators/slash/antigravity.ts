@@ -10,7 +10,13 @@ const FILE_PATHS: Record<SlashCommandId, string> = {
     'story-single': '.agent/workflows/story-single.md',
     'qa-test-scenario': '.agent/workflows/qa-test-scenario.md',
     'skill-creator': '.agent/workflows/skill-creator.md',
-    'ai-humanizer': '.agent/workflows/ai-humanizer.md'
+    'ai-humanizer': '.agent/workflows/ai-humanizer.md',
+    'api-contract-generator': '.agent/workflows/api-contract-generator.md',
+    'erd-generator': '.agent/workflows/erd-generator.md',
+    'fsd-generator': '.agent/workflows/fsd-generator.md',
+    'tdd-generator': '.agent/workflows/tdd-generator.md',
+    'tdd-lite-generator': '.agent/workflows/tdd-lite-generator.md',
+    'wireframe-generator': '.agent/workflows/wireframe-generator.md'
 };
 
 const DESCRIPTIONS: Record<SlashCommandId, string> = {
@@ -22,7 +28,13 @@ const DESCRIPTIONS: Record<SlashCommandId, string> = {
     'story-single': 'Generate a single Jira User Story from requirements',
     'qa-test-scenario': 'Generate focused QA test scenarios from PRD',
     'skill-creator': 'Create a modular skill package that extends AI agent capabilities',
-    'ai-humanizer': 'Humanize and proofread AI-generated content for natural, publication-ready output'
+    'ai-humanizer': 'Humanize and proofread AI-generated content for natural, publication-ready output',
+    'api-contract-generator': 'Generate OpenAPI specification from FSD and ERD',
+    'erd-generator': 'Generate Entity Relationship Diagram from FSD',
+    'fsd-generator': 'Generate Functional Specification Document from PRD',
+    'tdd-generator': 'Generate comprehensive Technical Design Document',
+    'tdd-lite-generator': 'Generate lean Technical Design Document (TDD-Lite)',
+    'wireframe-generator': 'Generate UI/UX wireframes from technical specs'
 };
 
 export class AntigravityConfigurator extends SlashCommandConfigurator {

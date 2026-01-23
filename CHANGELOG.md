@@ -1,5 +1,39 @@
 # CHANGELOG
 
+## [0.6.1] - 2026-01-23
+
+### ✨ Added
+- **New Generator Commands**: Added 6 new workflow generator commands for complete software development lifecycle
+  - `api-contract-generator`: Generate OpenAPI specification from FSD and ERD
+  - `erd-generator`: Generate Entity Relationship Diagram from FSD
+  - `fsd-generator`: Generate Functional Specification Document from PRD
+  - `tdd-generator`: Generate comprehensive Technical Design Document
+  - `tdd-lite-generator`: Generate lean Technical Design Document (TDD-Lite)
+  - `wireframe-generator`: Generate UI/UX wireframes from technical specs
+- **Embedded Templates**: All 6 new generators include full embedded prompt templates
+  - Complete workflow support for all AI tools
+  - Comprehensive prompts for technical documentation generation
+  - End-to-end software development workflow coverage
+- **Init Command Enhancement**: Updated `prompter init` to include all new prompts
+  - New prompts available in interactive selection
+  - Added to `--prompts` flag options
+  - Alphabetically organized prompt list
+
+### 🔄 Changed
+- **Tool Configurators**: Updated all AI tool configurators with new command paths
+  - GitHub Copilot: `.github/prompts/[command].prompt.md`
+  - Antigravity: `.agent/workflows/[command].md`
+  - Claude Code: `.claude/commands/prompter/[command].md`
+  - Codex: `.codex/prompts/[command].md`
+  - OpenCode: `.opencode/prompts/[command].md`
+  - Kilo Code: `.kilocode/workflows/[command].md`
+
+### 🔧 Technical
+- Extended `SlashCommandId` type with 6 new command identifiers
+- Added command bodies to `slashCommandBodies` registry
+- Updated `ALL_COMMANDS` array in base configurator
+- Enhanced `AVAILABLE_PROMPTS` with new generator descriptions
+
 ## [0.6.0] - 2026-01-22
 
 ### ✨ Added

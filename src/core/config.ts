@@ -39,10 +39,28 @@ export const AVAILABLE_PROMPTS: PromptChoice[] = [
         sourceFile: 'ai-humanizer.md'
     },
     {
+        name: 'API Contract Generator',
+        value: 'api-contract-generator',
+        description: 'Generate OpenAPI specification from FSD and ERD',
+        sourceFile: 'api-contract-generator.md'
+    },
+    {
         name: 'Epic (Single)',
         value: 'epic-single',
         description: 'Generate comprehensive epic documentation',
         sourceFile: 'epic-single.md'
+    },
+    {
+        name: 'ERD Generator',
+        value: 'erd-generator',
+        description: 'Generate Entity Relationship Diagram from FSD',
+        sourceFile: 'erd-generator.md'
+    },
+    {
+        name: 'FSD Generator',
+        value: 'fsd-generator',
+        description: 'Generate Functional Specification Document from PRD',
+        sourceFile: 'fsd-generator.md'
     },
     {
         name: 'PRD Agent Generator',
@@ -79,6 +97,24 @@ export const AVAILABLE_PROMPTS: PromptChoice[] = [
         value: 'story-single',
         description: 'Generate detailed user story documentation',
         sourceFile: 'story-single.md'
+    },
+    {
+        name: 'TDD Generator',
+        value: 'tdd-generator',
+        description: 'Generate comprehensive Technical Design Document',
+        sourceFile: 'tdd-generator.md'
+    },
+    {
+        name: 'TDD-Lite Generator',
+        value: 'tdd-lite-generator',
+        description: 'Generate lean Technical Design Document (TDD-Lite)',
+        sourceFile: 'tdd-lite-generator.md'
+    },
+    {
+        name: 'Wireframe Generator',
+        value: 'wireframe-generator',
+        description: 'Generate UI/UX wireframes from technical specs',
+        sourceFile: 'wireframe-generator.md'
     }
 ];
 

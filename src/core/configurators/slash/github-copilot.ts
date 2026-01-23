@@ -13,7 +13,13 @@ const FILE_PATHS: Record<SlashCommandId, string> = {
     'story-single': '.github/prompts/story-single.prompt.md',
     'qa-test-scenario': '.github/prompts/qa-test-scenario.prompt.md',
     'skill-creator': '.github/prompts/skill-creator.prompt.md',
-    'ai-humanizer': '.github/prompts/ai-humanizer.prompt.md'
+    'ai-humanizer': '.github/prompts/ai-humanizer.prompt.md',
+    'api-contract-generator': '.github/prompts/api-contract-generator.prompt.md',
+    'erd-generator': '.github/prompts/erd-generator.prompt.md',
+    'fsd-generator': '.github/prompts/fsd-generator.prompt.md',
+    'tdd-generator': '.github/prompts/tdd-generator.prompt.md',
+    'tdd-lite-generator': '.github/prompts/tdd-lite-generator.prompt.md',
+    'wireframe-generator': '.github/prompts/wireframe-generator.prompt.md'
 };
 
 const DESCRIPTIONS: Record<SlashCommandId, string> = {
@@ -25,7 +31,13 @@ const DESCRIPTIONS: Record<SlashCommandId, string> = {
     'story-single': 'Generate a single Jira User Story from requirements',
     'qa-test-scenario': 'Generate focused QA test scenarios from PRD',
     'skill-creator': 'Create a modular skill package that extends AI agent capabilities',
-    'ai-humanizer': 'Humanize and proofread AI-generated content for natural, publication-ready output'
+    'ai-humanizer': 'Humanize and proofread AI-generated content for natural, publication-ready output',
+    'api-contract-generator': 'Generate OpenAPI specification from FSD and ERD',
+    'erd-generator': 'Generate Entity Relationship Diagram from FSD',
+    'fsd-generator': 'Generate Functional Specification Document from PRD',
+    'tdd-generator': 'Generate comprehensive Technical Design Document',
+    'tdd-lite-generator': 'Generate lean Technical Design Document (TDD-Lite)',
+    'wireframe-generator': 'Generate UI/UX wireframes from technical specs'
 };
 
 export class GithubCopilotConfigurator extends SlashCommandConfigurator {
