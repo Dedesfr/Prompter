@@ -2,22 +2,22 @@ import { SlashCommandConfigurator } from './base.js';
 import { SlashCommandId } from '../../templates/index.js';
 
 const FILE_PATHS: Record<SlashCommandId, string> = {
-    enhance: '.opencode/prompts/prompter-enhance.md',
-    'prd-generator': '.opencode/prompts/prd-generator.md',
-    'prd-agent-generator': '.opencode/prompts/prd-agent-generator.md',
-    'product-brief': '.opencode/prompts/product-brief.md',
-    'epic-single': '.opencode/prompts/epic-single.md',
-    'story-single': '.opencode/prompts/story-single.md',
-    'qa-test-scenario': '.opencode/prompts/qa-test-scenario.md',
-    'skill-creator': '.opencode/prompts/skill-creator.md',
-    'ai-humanizer': '.opencode/prompts/ai-humanizer.md',
-    'api-contract-generator': '.opencode/prompts/api-contract-generator.md',
-    'erd-generator': '.opencode/prompts/erd-generator.md',
-    'fsd-generator': '.opencode/prompts/fsd-generator.md',
-    'tdd-generator': '.opencode/prompts/tdd-generator.md',
-    'tdd-lite-generator': '.opencode/prompts/tdd-lite-generator.md',
-    'wireframe-generator': '.opencode/prompts/wireframe-generator.md',
-    'document-explainer': '.opencode/prompts/document-explainer.md'
+    enhance: '.opencode/command/prompter-enhance.md',
+    'prd-generator': '.opencode/command/prd-generator.md',
+    'prd-agent-generator': '.opencode/command/prd-agent-generator.md',
+    'product-brief': '.opencode/command/product-brief.md',
+    'epic-single': '.opencode/command/epic-single.md',
+    'story-single': '.opencode/command/story-single.md',
+    'qa-test-scenario': '.opencode/command/qa-test-scenario.md',
+    'skill-creator': '.opencode/command/skill-creator.md',
+    'ai-humanizer': '.opencode/command/ai-humanizer.md',
+    'api-contract-generator': '.opencode/command/api-contract-generator.md',
+    'erd-generator': '.opencode/command/erd-generator.md',
+    'fsd-generator': '.opencode/command/fsd-generator.md',
+    'tdd-generator': '.opencode/command/tdd-generator.md',
+    'tdd-lite-generator': '.opencode/command/tdd-lite-generator.md',
+    'wireframe-generator': '.opencode/command/wireframe-generator.md',
+    'document-explainer': '.opencode/command/document-explainer.md'
 };
 
 const DESCRIPTIONS: Record<SlashCommandId, string> = {
