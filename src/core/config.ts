@@ -57,6 +57,12 @@ export const AVAILABLE_PROMPTS: PromptChoice[] = [
         sourceFile: 'epic-single.md'
     },
     {
+        name: 'Epic Generator',
+        value: 'epic-generator',
+        description: 'Generate comprehensive EPICs from FSD and TDD documentation',
+        sourceFile: 'epic-generator.md'
+    },
+    {
         name: 'ERD Generator',
         value: 'erd-generator',
         description: 'Generate Entity Relationship Diagram from FSD',
@@ -103,6 +109,12 @@ export const AVAILABLE_PROMPTS: PromptChoice[] = [
         value: 'story-single',
         description: 'Generate detailed user story documentation',
         sourceFile: 'story-single.md'
+    },
+    {
+        name: 'Story Generator',
+        value: 'story-generator',
+        description: 'Generate comprehensive user stories from EPICs and FSD',
+        sourceFile: 'story-generator.md'
     },
     {
         name: 'TDD Generator',
