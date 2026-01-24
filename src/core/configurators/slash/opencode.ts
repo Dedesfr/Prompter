@@ -49,6 +49,6 @@ export class OpenCodeConfigurator extends SlashCommandConfigurator {
 
     protected getFrontmatter(id: SlashCommandId): string | undefined {
         const description = DESCRIPTIONS[id];
-        return `---\ndescription: ${description}\n---`;
+        return `---\nagent: build\ndescription: ${description}\n---`;
     }
 }

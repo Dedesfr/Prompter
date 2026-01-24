@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [0.6.3] - 2026-01-24
+
+### 🔄 Changed
+- **OpenCode Format**: Added `agent: build` to the frontmatter of OpenCode workflow files
+  - Ensures compatibility with OpenCode's agent execution mode
+
 ## [0.6.2] - 2026-01-24
 
 ### ✨ Added
