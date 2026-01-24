@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## [0.6.5] - 2026-01-24
+
+### 🔄 Changed
+- **Streamlined CLI Commands**: Removed all generator commands from core CLI
+  - Kept only essential commands: `init`, `update`, `list`, `guide`, `upgrade`
+  - Generator workflows (epic-generator, story-generator, api-contract-generator, erd-generator, fsd-generator, tdd-generator, tdd-lite-generator, wireframe-generator, document-explainer) are still available via AI tool slash commands
+  - Cleaner, more focused CLI interface
+  - Reduced command clutter while maintaining full workflow functionality
+
+## [0.6.4] - 2026-01-24
+
+### ✨ Added
+- **Epic Generator & Story Generator**: New workflow generators for agile planning
+  - `epic-generator`: Generate comprehensive EPICs from FSD and TDD documentation
+  - `story-generator`: Generate user stories from EPICs and FSD
+  - Both include full embedded prompt templates with quality standards and verification checklists
+
 ## [0.6.3] - 2026-01-24
 
 ### 🔄 Changed

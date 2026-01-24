@@ -4,20 +4,13 @@ import { UpdateCommand } from '../commands/update.js';
 import { ListCommand } from '../commands/list.js';
 import { GuideCommand } from '../commands/guide.js';
 import { UpgradeCommand } from '../commands/upgrade.js';
-import { ApiContractGeneratorCommand } from '../commands/api-contract-generator.js';
-import { ErdGeneratorCommand } from '../commands/erd-generator.js';
-import { FsdGeneratorCommand } from '../commands/fsd-generator.js';
-import { TddGeneratorCommand } from '../commands/tdd-generator.js';
-import { TddLiteGeneratorCommand } from '../commands/tdd-lite-generator.js';
-import { WireframeGeneratorCommand } from '../commands/wireframe-generator.js';
-import { DocumentExplainerCommand } from '../commands/document-explainer.js';
 
 const program = new Command();
 
 program
     .name('prompter')
     .description('Enhance prompts directly in your AI coding workflow')
-    .version('0.6.4');
+    .version('0.6.5');
 
 program
     .command('init')
@@ -61,62 +54,6 @@ program
     .action(async () => {
         const upgradeCommand = new UpgradeCommand();
         await upgradeCommand.execute();
-    });
-
-program
-    .command('api-contract-generator')
-    .description('Generate API Contract workflow files')
-    .action(async () => {
-        const command = new ApiContractGeneratorCommand();
-        await command.execute();
-    });
-
-program
-    .command('erd-generator')
-    .description('Generate ERD workflow files')
-    .action(async () => {
-        const command = new ErdGeneratorCommand();
-        await command.execute();
-    });
-
-program
-    .command('fsd-generator')
-    .description('Generate FSD workflow files')
-    .action(async () => {
-        const command = new FsdGeneratorCommand();
-        await command.execute();
-    });
-
-program
-    .command('tdd-generator')
-    .description('Generate TDD workflow files')
-    .action(async () => {
-        const command = new TddGeneratorCommand();
-        await command.execute();
-    });
-
-program
-    .command('tdd-lite-generator')
-    .description('Generate TDD-Lite workflow files')
-    .action(async () => {
-        const command = new TddLiteGeneratorCommand();
-        await command.execute();
-    });
-
-program
-    .command('wireframe-generator')
-    .description('Generate Wireframe workflow files')
-    .action(async () => {
-        const command = new WireframeGeneratorCommand();
-        await command.execute();
-    });
-
-program
-    .command('document-explainer')
-    .description('Generate Document Explainer workflow files')
-    .action(async () => {
-        const command = new DocumentExplainerCommand();
-        await command.execute();
     });
 
 program.parse();
