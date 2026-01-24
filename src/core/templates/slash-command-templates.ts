@@ -1,13 +1,14 @@
-import { 
-    API_CONTRACT_GENERATOR_TEMPLATE, 
-    ERD_GENERATOR_TEMPLATE, 
-    FSD_GENERATOR_TEMPLATE, 
-    TDD_GENERATOR_TEMPLATE, 
-    TDD_LITE_GENERATOR_TEMPLATE, 
-    WIREFRAME_GENERATOR_TEMPLATE 
+import {
+    API_CONTRACT_GENERATOR_TEMPLATE,
+    ERD_GENERATOR_TEMPLATE,
+    FSD_GENERATOR_TEMPLATE,
+    TDD_GENERATOR_TEMPLATE,
+    TDD_LITE_GENERATOR_TEMPLATE,
+    WIREFRAME_GENERATOR_TEMPLATE,
+    DOCUMENT_EXPLAINER_TEMPLATE
 } from '../prompt-templates.js';
 
-export type SlashCommandId = 'enhance' | 'prd-generator' | 'prd-agent-generator' | 'product-brief' | 'epic-single' | 'story-single' | 'qa-test-scenario' | 'skill-creator' | 'ai-humanizer' | 'api-contract-generator' | 'erd-generator' | 'fsd-generator' | 'tdd-generator' | 'tdd-lite-generator' | 'wireframe-generator';
+export type SlashCommandId = 'enhance' | 'prd-generator' | 'prd-agent-generator' | 'product-brief' | 'epic-single' | 'story-single' | 'qa-test-scenario' | 'skill-creator' | 'ai-humanizer' | 'api-contract-generator' | 'erd-generator' | 'fsd-generator' | 'tdd-generator' | 'tdd-lite-generator' | 'wireframe-generator' | 'document-explainer';
 
 const enhanceWorkflow = `## MUST FOLLOW
 - Response Language: {User Request Language}
@@ -1040,7 +1041,8 @@ export const slashCommandBodies: Record<SlashCommandId, string> = {
     'fsd-generator': FSD_GENERATOR_TEMPLATE,
     'tdd-generator': TDD_GENERATOR_TEMPLATE,
     'tdd-lite-generator': TDD_LITE_GENERATOR_TEMPLATE,
-    'wireframe-generator': WIREFRAME_GENERATOR_TEMPLATE
+    'wireframe-generator': WIREFRAME_GENERATOR_TEMPLATE,
+    'document-explainer': DOCUMENT_EXPLAINER_TEMPLATE
 };
 
 export function getSlashCommandBody(id: SlashCommandId): string {

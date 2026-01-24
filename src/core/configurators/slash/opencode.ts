@@ -16,7 +16,8 @@ const FILE_PATHS: Record<SlashCommandId, string> = {
     'fsd-generator': '.opencode/prompts/fsd-generator.md',
     'tdd-generator': '.opencode/prompts/tdd-generator.md',
     'tdd-lite-generator': '.opencode/prompts/tdd-lite-generator.md',
-    'wireframe-generator': '.opencode/prompts/wireframe-generator.md'
+    'wireframe-generator': '.opencode/prompts/wireframe-generator.md',
+    'document-explainer': '.opencode/prompts/document-explainer.md'
 };
 
 const DESCRIPTIONS: Record<SlashCommandId, string> = {
@@ -34,7 +35,8 @@ const DESCRIPTIONS: Record<SlashCommandId, string> = {
     'fsd-generator': 'Generate Functional Specification Document from PRD',
     'tdd-generator': 'Generate comprehensive Technical Design Document',
     'tdd-lite-generator': 'Generate lean Technical Design Document (TDD-Lite)',
-    'wireframe-generator': 'Generate UI/UX wireframes from technical specs'
+    'wireframe-generator': 'Generate UI/UX wireframes from technical specs',
+    'document-explainer': 'Analyze and explain complex documents into clear, actionable insights'
 };
 
 export class OpenCodeConfigurator extends SlashCommandConfigurator {

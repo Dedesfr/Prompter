@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## [0.6.2] - 2026-01-24
+
+### ✨ Added
+- **New Document Explainer Command**: Added `document-explainer` command to generate workflow files for document analysis
+  - Extracts value, identifies issues, and facilitates productive discussion about improvements
+  - Provides section-by-section breakdown in plain language
+  - Identifies gaps, redundancies, and structural improvement opportunities
+- **Embedded Document Explainer Template**: New comprehensive prompt template for document analysis
+  - Complete workflow support for all supported AI tools
+  - Structured output including executive summary, key takeaways, and improvement suggestions
+- **Init Command Enhancement**: Added `document-explainer` to prompt installation options
+  - Selectable in interactive `prompter init` mode
+  - Supported via `--prompts` flag
+
 ## [0.6.1] - 2026-01-23
 
 ### ✨ Added

@@ -9,7 +9,7 @@ export interface SlashCommandTarget {
     kind: 'slash';
 }
 
-const ALL_COMMANDS: SlashCommandId[] = ['enhance', 'prd-generator', 'prd-agent-generator', 'product-brief', 'epic-single', 'story-single', 'qa-test-scenario', 'skill-creator', 'ai-humanizer', 'api-contract-generator', 'erd-generator', 'fsd-generator', 'tdd-generator', 'tdd-lite-generator', 'wireframe-generator'];
+const ALL_COMMANDS: SlashCommandId[] = ['enhance', 'prd-generator', 'prd-agent-generator', 'product-brief', 'epic-single', 'story-single', 'qa-test-scenario', 'skill-creator', 'ai-humanizer', 'api-contract-generator', 'erd-generator', 'fsd-generator', 'tdd-generator', 'tdd-lite-generator', 'wireframe-generator', 'document-explainer'];
 
 export abstract class SlashCommandConfigurator {
     abstract readonly toolId: string;
@@ -22,7 +22,7 @@ export abstract class SlashCommandConfigurator {
         const commandsToGenerate = filterIds === undefined
             ? ALL_COMMANDS
             : ALL_COMMANDS.filter(id => filterIds.includes(id));
-            
+
         return commandsToGenerate.map((id) => ({
             id,
             path: this.getRelativePath(id),

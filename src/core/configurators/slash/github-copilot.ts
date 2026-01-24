@@ -19,7 +19,8 @@ const FILE_PATHS: Record<SlashCommandId, string> = {
     'fsd-generator': '.github/prompts/fsd-generator.prompt.md',
     'tdd-generator': '.github/prompts/tdd-generator.prompt.md',
     'tdd-lite-generator': '.github/prompts/tdd-lite-generator.prompt.md',
-    'wireframe-generator': '.github/prompts/wireframe-generator.prompt.md'
+    'wireframe-generator': '.github/prompts/wireframe-generator.prompt.md',
+    'document-explainer': '.github/prompts/document-explainer.prompt.md'
 };
 
 const DESCRIPTIONS: Record<SlashCommandId, string> = {
@@ -37,7 +38,8 @@ const DESCRIPTIONS: Record<SlashCommandId, string> = {
     'fsd-generator': 'Generate Functional Specification Document from PRD',
     'tdd-generator': 'Generate comprehensive Technical Design Document',
     'tdd-lite-generator': 'Generate lean Technical Design Document (TDD-Lite)',
-    'wireframe-generator': 'Generate UI/UX wireframes from technical specs'
+    'wireframe-generator': 'Generate UI/UX wireframes from technical specs',
+    'document-explainer': 'Analyze and explain complex documents into clear, actionable insights'
 };
 
 export class GithubCopilotConfigurator extends SlashCommandConfigurator {

@@ -45,6 +45,12 @@ export const AVAILABLE_PROMPTS: PromptChoice[] = [
         sourceFile: 'api-contract-generator.md'
     },
     {
+        name: 'Document Explainer',
+        value: 'document-explainer',
+        description: 'Analyze and explain complex documents into clear, actionable insights',
+        sourceFile: 'document-explainer.md'
+    },
+    {
         name: 'Epic (Single)',
         value: 'epic-single',
         description: 'Generate comprehensive epic documentation',

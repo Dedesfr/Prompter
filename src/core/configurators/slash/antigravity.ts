@@ -16,7 +16,8 @@ const FILE_PATHS: Record<SlashCommandId, string> = {
     'fsd-generator': '.agent/workflows/fsd-generator.md',
     'tdd-generator': '.agent/workflows/tdd-generator.md',
     'tdd-lite-generator': '.agent/workflows/tdd-lite-generator.md',
-    'wireframe-generator': '.agent/workflows/wireframe-generator.md'
+    'wireframe-generator': '.agent/workflows/wireframe-generator.md',
+    'document-explainer': '.agent/workflows/document-explainer.md'
 };
 
 const DESCRIPTIONS: Record<SlashCommandId, string> = {
@@ -34,7 +35,8 @@ const DESCRIPTIONS: Record<SlashCommandId, string> = {
     'fsd-generator': 'Generate Functional Specification Document from PRD',
     'tdd-generator': 'Generate comprehensive Technical Design Document',
     'tdd-lite-generator': 'Generate lean Technical Design Document (TDD-Lite)',
-    'wireframe-generator': 'Generate UI/UX wireframes from technical specs'
+    'wireframe-generator': 'Generate UI/UX wireframes from technical specs',
+    'document-explainer': 'Analyze and explain complex documents into clear, actionable insights'
 };
 
 export class AntigravityConfigurator extends SlashCommandConfigurator {

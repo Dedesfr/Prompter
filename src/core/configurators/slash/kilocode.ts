@@ -16,7 +16,8 @@ const FILE_PATHS: Record<SlashCommandId, string> = {
     'fsd-generator': '.kilocode/workflows/fsd-generator.md',
     'tdd-generator': '.kilocode/workflows/tdd-generator.md',
     'tdd-lite-generator': '.kilocode/workflows/tdd-lite-generator.md',
-    'wireframe-generator': '.kilocode/workflows/wireframe-generator.md'
+    'wireframe-generator': '.kilocode/workflows/wireframe-generator.md',
+    'document-explainer': '.kilocode/workflows/document-explainer.md'
 };
 
 const DESCRIPTIONS: Record<SlashCommandId, string> = {
@@ -34,7 +35,8 @@ const DESCRIPTIONS: Record<SlashCommandId, string> = {
     'fsd-generator': 'Generate Functional Specification Document from PRD',
     'tdd-generator': 'Generate comprehensive Technical Design Document',
     'tdd-lite-generator': 'Generate lean Technical Design Document (TDD-Lite)',
-    'wireframe-generator': 'Generate UI/UX wireframes from technical specs'
+    'wireframe-generator': 'Generate UI/UX wireframes from technical specs',
+    'document-explainer': 'Analyze and explain complex documents into clear, actionable insights'
 };
 
 export class KiloCodeConfigurator extends SlashCommandConfigurator {
