@@ -66,76 +66,111 @@ For each identified EPIC, define:
 
 # Output Format
 
-## Executive Summary
+## Directory Structure
+Create an `epics/` folder with the following structure:
+```
+epics/
+├── README.md                    # Executive summary and index
+├── EPIC-001-[kebab-case-title].md
+├── EPIC-002-[kebab-case-title].md
+├── EPIC-003-[kebab-case-title].md
+└── ...
+```
+
+## File: `epics/README.md`
+
+### Executive Summary
 - Total EPICs identified: [number]
 - Complexity distribution: [High/Medium/Low counts]
 - Key dependencies identified: [summary]
 - Coverage gaps or conflicts: [if any]
 
-## EPIC Catalog
+### EPIC Index
+| EPIC ID | Title | Complexity | Dependencies | File |
+|---------|-------|------------|--------------|------|
+| EPIC-001 | [Title] | [S/M/L/XL] | [EPIC-XXX] | [Link to file] |
+| EPIC-002 | [Title] | [S/M/L/XL] | [EPIC-XXX] | [Link to file] |
 
-### EPIC-[XXX]: [EPIC Title]
+### Dependency Map
+[Visual or text representation of EPIC dependencies]
+```
+EPIC-001 ──► EPIC-003
+EPIC-002 ──► EPIC-003
+EPIC-003 ──► EPIC-005
+```
 
-**Business Value Statement:**
+### Traceability Matrix
+| Requirement ID | FSD Section | TDD Component | Wireframe | EPIC |
+|----------------|-------------|---------------|-----------|------|
+| [REQ-001] | [Section] | [Component] | [Screen] | [EPIC-XXX] |
+
+### Gaps & Recommendations
+1. **Identified Gaps:** [Requirements not fully covered]
+2. **Conflicts Found:** [Contradictions between documents]
+3. **Recommendations:** [Suggested clarifications needed]
+
+---
+
+## Individual EPIC Files
+
+**File naming convention:** `EPIC-[XXX]-[kebab-case-title].md`  
+Example: `EPIC-001-user-authentication.md`
+
+### Template for Each EPIC File
+
+```markdown
+# EPIC-[XXX]: [EPIC Title]
+
+## Business Value Statement
 [2-3 sentences describing the business outcome and user benefit]
 
-**Description:**
+## Description
 [Detailed description of what this EPIC delivers]
 
-**Source Traceability:**
+## Source Traceability
 | Document | Reference | Section/Page |
 |----------|-----------|--------------|
 | FSD | [Requirement ID] | [Location] |
 | TDD | [Component/Section] | [Location] |
 | Wireframe | [Screen Name] | [If applicable] |
 
-**Scope Definition:**
+## Scope Definition
 | In Scope | Out of Scope |
 |----------|--------------|
 | [Item 1] | [Item 1] |
 | [Item 2] | [Item 2] |
 
-**High-Level Acceptance Criteria:**
+## High-Level Acceptance Criteria
 - [ ] [Criterion 1]
 - [ ] [Criterion 2]
 - [ ] [Criterion 3]
 - [ ] [Criterion 4]
 
-**Dependencies:**
+## Dependencies
 - **Prerequisite EPICs:** [EPIC-XXX, EPIC-XXX] or None
 - **External Dependencies:** [Systems, teams, data]
 - **Technical Prerequisites:** [Infrastructure, APIs, etc.]
 
-**Complexity Assessment:**
+## Complexity Assessment
 - **Size:** [S / M / L / XL]
 - **Technical Complexity:** [Low / Medium / High]
 - **Integration Complexity:** [Low / Medium / High]
 - **Estimated Story Count:** [Range]
 
-**Risks & Assumptions:**
-- **Assumptions:** [List key assumptions]
-- **Risks:** [List identified risks]
+## Risks & Assumptions
+**Assumptions:**
+- [Assumption 1]
+- [Assumption 2]
 
----
+**Risks:**
+- [Risk 1]
+- [Risk 2]
 
-[Repeat for each EPIC]
-
-## Dependency Map
-
-[Visual or text representation of EPIC dependencies]
-EPIC-001 ──► EPIC-003
-EPIC-002 ──► EPIC-003
-EPIC-003 ──► EPIC-005
-
-## Traceability Matrix
-| Requirement ID | FSD Section | TDD Component | Wireframe | EPIC |
-|----------------|-------------|---------------|-----------|------|
-| [REQ-001] | [Section] | [Component] | [Screen] | [EPIC-XXX] |
-
-## Gaps & Recommendations
-1. **Identified Gaps:** [Requirements not fully covered]
-2. **Conflicts Found:** [Contradictions between documents]
-3. **Recommendations:** [Suggested clarifications needed]
+## Related EPICs
+- **Depends On:** [EPIC-XXX]
+- **Blocks:** [EPIC-XXX]
+- **Related:** [EPIC-XXX]
+```
 
 # Quality Standards
 - Every functional requirement must map to at least one EPIC

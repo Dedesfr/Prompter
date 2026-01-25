@@ -53,24 +53,75 @@ Generate comprehensive user stories from provided Epics, enriched with details f
 
 # Output Requirements
 
-For each Epic, generate stories in this exact format:
+## Directory Structure
+Create a `stories/` folder organized by Epic:
+```
+stories/
+├── EPIC-001-[kebab-case-title]/
+│   ├── README.md                              # Epic summary and story index
+│   ├── STORY-001-[kebab-case-title].md
+│   ├── STORY-002-[kebab-case-title].md
+│   └── ...
+├── EPIC-002-[kebab-case-title]/
+│   ├── README.md
+│   ├── STORY-001-[kebab-case-title].md
+│   └── ...
+└── ...
+```
+
+## File: `stories/EPIC-[XXX]-[title]/README.md`
+
+### Epic Summary
+**Epic ID:** EPIC-[XXX]  
+**Epic Title:** [Epic Name]  
+**Epic Description:** [Brief description from Epic]
+
+### Story Index
+| Story ID | Title | Priority | Story Points | Status | File |
+|----------|-------|----------|--------------|--------|------|
+| STORY-001 | [Title] | Must Have | 5 | Not Started | [Link] |
+| STORY-002 | [Title] | Should Have | 3 | Not Started | [Link] |
+
+### Story Dependency Map
+```
+STORY-001 ──► STORY-003
+STORY-002 ──► STORY-003
+```
+
+### Total Estimates
+- **Total Story Points:** [Sum]
+- **Must Have:** [Points]
+- **Should Have:** [Points]
+- **Could Have:** [Points]
 
 ---
 
-## Epic: [Epic Name/ID]
+## Individual Story Files
 
-### Story [Number]: [Concise Story Title]
+**File naming convention:** `STORY-[XXX]-[kebab-case-title].md`  
+Example: `STORY-001-user-login-email.md`
 
-**User Story:**
-As a [specific user role],
-I want to [action/capability],
+### Template for Each Story File
+
+```markdown
+# STORY-[XXX]: [Concise Story Title]
+
+**Epic:** [EPIC-XXX - Epic Name]  
+**Story Points:** [Fibonacci estimate: 1, 2, 3, 5, 8, 13]  
+**Priority:** [Must Have / Should Have / Could Have / Won't Have]
+
+---
+
+## User Story
+As a [specific user role],  
+I want to [action/capability],  
 So that [business value/outcome].
 
-**Description:**
+## Description
 [2-3 sentences providing additional context, referencing FSD sections where applicable]
 
-**Acceptance Criteria:**
-gherkin
+## Acceptance Criteria
+```gherkin
 GIVEN [precondition/context]
 WHEN [action/trigger]
 THEN [expected outcome]
@@ -78,23 +129,34 @@ THEN [expected outcome]
 GIVEN [precondition/context]
 WHEN [alternative action]
 THEN [expected outcome]
+```
 
-**Business Rules:**
-- BR-1: [Rule from FSD]
-- BR-2: [Rule from FSD]
+## Business Rules
+- **BR-1:** [Rule from FSD]
+- **BR-2:** [Rule from FSD]
 
-**Technical Notes:**
+## Technical Notes
 - [Integration requirements]
 - [Data considerations]
 - [API/System dependencies]
 
-**FSD Reference:** [Section/Requirement IDs traced from FSD]
+## Traceability
+- **FSD Reference:** [Section/Requirement IDs traced from FSD]
+- **Epic:** [EPIC-XXX]
 
-**Dependencies:** [Other story IDs or external dependencies]
+## Dependencies
+- **Depends On:** [STORY-XXX, STORY-XXX] or None
+- **Blocks:** [STORY-XXX] or None
+- **External Dependencies:** [Systems, APIs, etc.]
 
-**Story Points:** [Fibonacci estimate: 1, 2, 3, 5, 8, 13]
-
-**Priority:** [Must Have / Should Have / Could Have / Won't Have]
+## Definition of Done
+- [ ] Code implemented and peer-reviewed
+- [ ] Unit tests written and passing
+- [ ] Integration tests passing
+- [ ] Documentation updated
+- [ ] Acceptance criteria verified
+- [ ] Code merged to main branch
+```
 
 ---
 
