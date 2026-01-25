@@ -1670,13 +1670,20 @@ Generate comprehensive user stories from provided Epics, enriched with details f
    - Note technical constraints and integration points
    - Pull UI/UX specifications where applicable
 
-3. **Story Construction**
+3. **Role Classification**
+   - Classify each story by implementation role:
+     - **Frontend**: UI/UX changes, client-side logic, visual components
+     - **Backend**: Server-side logic, APIs, database operations, integrations
+     - **Others**: DevOps, documentation, cross-cutting concerns, or unclear classification
+   - If uncertain, default to "Others"
+
+4. **Story Construction**
    - Write clear user story statements
    - Define comprehensive acceptance criteria
    - Add technical notes and dependencies
    - Estimate relative complexity
 
-4. **Quality Verification**
+5. **Quality Verification**
    - Ensure stories follow INVEST principles
    - Verify traceability back to Epic and FSD
    - Confirm acceptance criteria are testable
@@ -1699,18 +1706,27 @@ Generate comprehensive user stories from provided Epics, enriched with details f
 # Output Requirements
 
 ## Directory Structure
-Create a \`stories/\` folder organized by Epic:
+Create a \`stories/\` folder organized by Epic and Role:
 \`\`\`
 stories/
 ├── EPIC-001-[kebab-case-title]/
 │   ├── README.md                              # Epic summary and story index
-│   ├── STORY-001-[kebab-case-title].md
-│   ├── STORY-002-[kebab-case-title].md
-│   └── ...
+│   ├── Frontend/
+│   │   ├── STORY-001-[kebab-case-title].md
+│   │   ├── STORY-002-[kebab-case-title].md
+│   │   └── ...
+│   ├── Backend/
+│   │   ├── STORY-003-[kebab-case-title].md
+│   │   ├── STORY-004-[kebab-case-title].md
+│   │   └── ...
+│   └── Others/
+│       ├── STORY-005-[kebab-case-title].md
+│       └── ...
 ├── EPIC-002-[kebab-case-title]/
 │   ├── README.md
-│   ├── STORY-001-[kebab-case-title].md
-│   └── ...
+│   ├── Frontend/
+│   ├── Backend/
+│   └── Others/
 └── ...
 \`\`\`
 
@@ -1721,30 +1737,51 @@ stories/
 **Epic Title:** [Epic Name]  
 **Epic Description:** [Brief description from Epic]
 
-### Story Index
+### Story Index by Role
+
+#### Frontend Stories
 | Story ID | Title | Priority | Story Points | Status | File |
 |----------|-------|----------|--------------|--------|------|
 | STORY-001 | [Title] | Must Have | 5 | Not Started | [Link] |
 | STORY-002 | [Title] | Should Have | 3 | Not Started | [Link] |
 
+#### Backend Stories
+| Story ID | Title | Priority | Story Points | Status | File |
+|----------|-------|----------|--------------|--------|------|
+| STORY-003 | [Title] | Must Have | 8 | Not Started | [Link] |
+| STORY-004 | [Title] | Should Have | 5 | Not Started | [Link] |
+
+#### Others
+| Story ID | Title | Priority | Story Points | Status | File |
+|----------|-------|----------|--------------|--------|------|
+| STORY-005 | [Title] | Should Have | 2 | Not Started | [Link] |
+
 ### Story Dependency Map
 \`\`\`
 STORY-001 ──► STORY-003
 STORY-002 ──► STORY-003
+STORY-003 ──► STORY-005
 \`\`\`
 
 ### Total Estimates
 - **Total Story Points:** [Sum]
-- **Must Have:** [Points]
-- **Should Have:** [Points]
-- **Could Have:** [Points]
+- **Frontend:** [Points]
+- **Backend:** [Points]
+- **Others:** [Points]
+- **By Priority:**
+  - **Must Have:** [Points]
+  - **Should Have:** [Points]
+  - **Could Have:** [Points]
 
 ---
 
 ## Individual Story Files
 
-**File naming convention:** \`STORY-[XXX]-[kebab-case-title].md\`  
-Example: \`STORY-001-user-login-email.md\`
+**File naming convention:** \`[Role]/STORY-[XXX]-[kebab-case-title].md\`  
+Examples:
+- \`Frontend/STORY-001-user-login-email.md\`
+- \`Backend/STORY-003-authentication-api.md\`
+- \`Others/STORY-005-deployment-pipeline.md\`
 
 ### Template for Each Story File
 
@@ -1752,6 +1789,7 @@ Example: \`STORY-001-user-login-email.md\`
 # STORY-[XXX]: [Concise Story Title]
 
 **Epic:** [EPIC-XXX - Epic Name]  
+**Role:** [Frontend / Backend / Others]  
 **Story Points:** [Fibonacci estimate: 1, 2, 3, 5, 8, 13]  
 **Priority:** [Must Have / Should Have / Could Have / Won't Have]
 
@@ -1830,9 +1868,10 @@ THEN [expected outcome]
    - Continue with story generation
 
 4. **Output Organization:**
-   - Group stories by Epic
-   - Order stories by logical implementation sequence
-   - Highlight cross-Epic dependencies
+   - Group stories by Epic, then by Role (Frontend/Backend/Others)
+   - Classify each story by primary implementation role
+   - Order stories by logical implementation sequence within each role
+   - Highlight cross-Epic and cross-role dependencies
 
 # Example Output
 

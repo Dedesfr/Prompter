@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## [0.6.11] - 2026-01-25
+
+### 🔄 Changed
+- **Story Generator Role Classification**: Stories now categorized by implementation role
+  - New role types: **Frontend**, **Backend**, **Others**
+  - Role classification step added to story generation process
+  - Unclear stories default to "Others" category
+- **Story Organization by Role**: Stories organized into role-based folders
+  - Directory structure: `stories/EPIC-[id]/[Role]/STORY-[id]-[title].md`
+  - Frontend, Backend, and Others folders created per Epic
+  - Enables better team assignment and parallel work
+- **Story Template Enhancement**: Updated story file template
+  - Added **Role** field to story metadata
+  - Role classification visible in individual story files
+- **Story Index by Role**: README files now group stories by role
+  - Separate story index tables for Frontend, Backend, and Others
+  - Story point estimates broken down by role
+  - Clearer work assignment and team allocation
+
 ## [0.6.10] - 2026-01-25
 
 ### 🔧 Fixed
