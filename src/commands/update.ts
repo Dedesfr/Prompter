@@ -1,8 +1,9 @@
 import chalk from 'chalk';
 import { promises as fs } from 'fs';
 import path from 'path';
-import { PrompterConfig } from '../core/config.js';
+import { PrompterConfig, AVAILABLE_PROMPTS, PROMPTER_DIR } from '../core/config.js';
 import { registry } from '../core/configurators/slash/index.js';
+import { PROMPT_TEMPLATES } from '../core/prompt-templates.js';
 
 export class UpdateCommand {
     async execute(): Promise<void> {
@@ -29,41 +30,37 @@ export class UpdateCommand {
         }
 
         let updatedCount = 0;
-        let createdCount = 0;
 
-        // Update and add missing workflow files for configured tools only
+        // Update existing workflow files for configured tools only
         for (const toolId of configuredTools) {
             const configurator = registry.get(toolId);
             if (!configurator) continue;
 
             try {
-                // Update existing files
+                // Only update existing files, don't create new ones
                 const updatedFiles = await configurator.updateExisting(projectPath);
                 for (const file of updatedFiles) {
                     console.log(chalk.green('✓') + ` Updated ${chalk.cyan(file)}`);
                     updatedCount++;
-                }
-
-                // Generate all workflow files (including missing ones)
-                const allFiles = await configurator.generateAll(projectPath);
-                const newFiles = allFiles.filter(f => !updatedFiles.includes(f));
-                for (const file of newFiles) {
-                    console.log(chalk.green('✓') + ` Created ${chalk.cyan(file)}`);
-                    createdCount++;
                 }
             } catch (error) {
                 console.log(chalk.red('✗') + ` Failed to update ${configurator.toolId}: ${error}`);
             }
         }
 
-        if (updatedCount === 0 && createdCount === 0) {
+        // Update existing prompts in prompter/core/
+        const prompterPath = path.join(projectPath, PROMPTER_DIR);
+        const updatedCorePrompts = await this.updateCorePrompts(prompterPath);
+        for (const promptName of updatedCorePrompts) {
+            console.log(chalk.green('✓') + ` Updated ${chalk.cyan(`${PROMPTER_DIR}/core/${promptName}`)}`);
+            updatedCount++;
+        }
+
+        if (updatedCount === 0) {
             console.log(chalk.yellow('⚠️  No workflow files found to update.'));
             console.log(chalk.gray('   Run `prompter init` to create them.\n'));
         } else {
-            const summary: string[] = [];
-            if (updatedCount > 0) summary.push(`${updatedCount} updated`);
-            if (createdCount > 0) summary.push(`${createdCount} created`);
-            console.log(chalk.green(`\n✅ ${summary.join(', ')}.\n`));
+            console.log(chalk.green(`\n✅ ${updatedCount} file(s) updated.\n`));
         }
     }
 
@@ -98,5 +95,40 @@ export class UpdateCommand {
         }
 
         return configuredTools;
+    }
+
+    private async updateCorePrompts(prompterPath: string): Promise<string[]> {
+        const updatedPrompts: string[] = [];
+        const corePath = path.join(prompterPath, 'core');
+
+        // Check if core directory exists
+        if (!await this.fileExists(corePath)) {
+            return updatedPrompts;
+        }
+
+        // Update each existing prompt file
+        for (const prompt of AVAILABLE_PROMPTS) {
+            const promptFilePath = path.join(corePath, prompt.sourceFile);
+            
+            // Only update if file exists
+            if (await this.fileExists(promptFilePath)) {
+                try {
+                    const content = PROMPT_TEMPLATES[prompt.value];
+                    
+                    if (!content) {
+                        console.log(chalk.yellow(`  Warning: Template not found for ${prompt.name}`));
+                        continue;
+                    }
+                    
+                    // Update the prompt file
+                    await fs.writeFile(promptFilePath, content, 'utf-8');
+                    updatedPrompts.push(prompt.sourceFile);
+                } catch (error) {
+                    console.log(chalk.red(`  Error updating ${prompt.name}: ${error}`));
+                }
+            }
+        }
+
+        return updatedPrompts;
     }
 }

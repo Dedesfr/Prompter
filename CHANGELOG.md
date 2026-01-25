@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## [0.6.10] - 2026-01-25
+
+### 🔧 Fixed
+- **Init Command**: Now updates existing prompt files in `prompter/core/` during re-initialization
+  - Re-running `prompter init` now refreshes kept prompts to latest version
+  - Adds new prompts while updating existing ones in `prompter/core/`
+- **Update Command**: Fixed to only update existing files instead of creating all available commands
+  - No longer creates all available commands when updating
+  - Only updates existing workflow files in AI tool directories
+  - Now also updates existing prompt files in `prompter/core/` directory
+  - Behavior matches the original intent: update only what exists, don't create new
+
 ## [0.6.9] - 2026-01-25
 
 ### 🔄 Changed

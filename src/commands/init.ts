@@ -255,6 +255,15 @@ export class InitCommand {
             }
         }
 
+        // Update existing prompts in prompter/core/
+        if (isReInitialization && promptsToKeep.length > 0) {
+            console.log(chalk.blue('\n🔄 Updating existing prompt templates...\n'));
+            const updatedPrompts = await this.installPrompts(projectPath, prompterPath, promptsToKeep);
+            for (const promptName of updatedPrompts) {
+                console.log(chalk.green('✓') + ` Updated ${chalk.cyan(promptName)}`);
+            }
+        }
+
         // Success message
         if (isReInitialization) {
             console.log(chalk.green('\n✅ Prompter tools updated successfully!\n'));
@@ -402,7 +411,7 @@ export class InitCommand {
                     continue;
                 }
                 
-                // Write the prompt file from embedded template
+                // Write the prompt file from embedded template (overwrites if exists)
                 await fs.writeFile(destPath, content, 'utf-8');
                 installedPrompts.push(prompt.name);
             } catch (error) {
