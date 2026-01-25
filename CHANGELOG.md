@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## [0.6.9] - 2026-01-25
+
+### 🔄 Changed
+- **Epic Generator Output Structure**: Refactored to generate organized directory structure
+  - Now creates `epics/README.md` with executive summary, EPIC index, dependency map, and traceability matrix
+  - Individual EPICs as separate files: `EPIC-[XXX]-[kebab-case-title].md`
+  - Each EPIC file includes complete details with Related EPICs section
+  - Better organization for version control and individual reference
+- **Story Generator Output Structure**: Refactored to generate organized directory structure
+  - Now creates `stories/EPIC-[XXX]-[title]/` folders for each Epic
+  - Each Epic folder contains `README.md` with story index, dependency map, and estimate totals
+  - Individual stories as separate files: `STORY-[XXX]-[kebab-case-title].md`
+  - Each story file includes Definition of Done checklist
+  - Stories grouped by Epic for easier sprint planning and navigation
+
 ## [0.6.5] - 2026-01-24
 
 ### 🔄 Changed
