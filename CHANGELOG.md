@@ -1,5 +1,35 @@
 # CHANGELOG
 
+## [0.6.12] - 2026-01-26
+
+### ✨ Added
+- **Design System Command**: New workflow command for design system documentation
+  - `prompter design-system`: Generate Design System workflow files
+  - Create comprehensive design system documentation for components and tokens
+  - Support for all 6 AI tools (Antigravity, Claude Code, Codex, GitHub Copilot, OpenCode, Kilo Code)
+- **Design System Template**: New embedded prompt template for design documentation
+  - Complete workflow for generating component documentation
+  - Support for components, design tokens, and patterns
+  - Includes anatomy, variants, props/API, states, accessibility, and code examples
+  - Quality standards and best practices guidance
+- **Design System Integration**: Full integration into Prompter ecosystem
+  - Available in `prompter init --prompts design-system`
+  - Selectable in interactive `prompter init` mode
+  - Workflow files generated for all configured AI tools
+  - Tool-specific file paths configured for each AI tool
+
+### 🔄 Changed
+- **Updated CLI Commands**: Added design-system to help documentation
+  - Listed in `prompter --help` output
+  - Included in `prompter init` available prompts
+- **Updated All Configurators**: Extended file paths and descriptions
+  - Antigravity: `.agent/workflows/design-system.md`
+  - Claude Code: `.claude/commands/prompter/design-system.md`
+  - Codex: `.codex/prompts/design-system.md`
+  - GitHub Copilot: `.github/prompts/design-system.prompt.md`
+  - OpenCode: `.opencode/command/design-system.md`
+  - Kilo Code: `.kilocode/workflows/design-system.md`
+
 ## [0.6.11] - 2026-01-25
 
 ### 🔄 Changed

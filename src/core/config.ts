@@ -45,6 +45,12 @@ export const AVAILABLE_PROMPTS: PromptChoice[] = [
         sourceFile: 'api-contract-generator.md'
     },
     {
+        name: 'Design System',
+        value: 'design-system',
+        description: 'Generate comprehensive design system documentation for components and tokens',
+        sourceFile: 'design-system.md'
+    },
+    {
         name: 'Document Explainer',
         value: 'document-explainer',
         description: 'Analyze and explain complex documents into clear, actionable insights',
