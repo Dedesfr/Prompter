@@ -3416,6 +3416,7 @@ First, I will analyze each provided document systematically, then generate the c
 export const PROMPT_TEMPLATES: Record<string, string> = {
    'ai-humanizer': AI_HUMANIZER_TEMPLATE,
    'api-contract-generator': API_CONTRACT_GENERATOR_TEMPLATE,
+   'design-system': DESIGN_SYSTEM_TEMPLATE,
    'document-explainer': DOCUMENT_EXPLAINER_TEMPLATE,
    'epic-generator': EPIC_GENERATOR_TEMPLATE,
    'epic-single': EPIC_SINGLE_TEMPLATE,

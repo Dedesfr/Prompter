@@ -11,7 +11,7 @@ const program = new Command();
 program
     .name('prompter')
     .description('Enhance prompts directly in your AI coding workflow')
-    .version('0.6.13');
+    .version('0.6.14');
 
 program
     .command('init')

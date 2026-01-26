@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [0.6.14] - 2026-01-26
+
+### 🔧 Fixed
+- **Design System Installation Issue**: Fixed design-system not being installed during `prompter init`
+  - Added 'design-system' to ALL_COMMANDS array in base configurator
+  - Added 'design-system' to PROMPT_TEMPLATES mapping
+  - Now correctly generates workflow files for all configured AI tools
+  - Now correctly installs design-system.md to prompter/core/ directory
+
 ## [0.6.13] - 2026-01-26
 
 ### ✨ Added
