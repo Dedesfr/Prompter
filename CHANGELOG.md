@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## [0.6.13] - 2026-01-26
+
+### ✨ Added
+- **Guide Command Enhancement**: Enhanced `prompter guide` with document workflow dependencies
+  - Added comprehensive workflow dependency table
+  - Shows recommended order for generating all document types
+  - Clear visualization of document generation pipeline
+
+### 🔄 Changed
+- **Guide Command Output**: Expanded guide with workflow reference table
+  - 10 document types with their dependencies listed
+  - Strictly Required Inputs column showing must-have dependencies
+  - Recommended Extra Inputs column showing optional enhancements
+  - Special notation for new vs. existing projects
+  - Legend explaining table notation and abbreviations
+  - ASCII table format with proper alignment for terminal display
+
+### 📚 Documentation
+- Added workflow dependencies documentation within CLI help
+- Integrated dependency documentation into `prompter guide` command
+- Documents include:
+  - Product Brief, PRD, FSD, ERD
+  - API Contract, UI Wireframes, Design System
+  - TDD, Epics, Stories
+  - Clear dependency relationships between all document types
+
 ## [0.6.12] - 2026-01-26
 
 ### ✨ Added
