@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [0.6.15] - 2026-01-29
+
+### ✨ Added
+- **Guide Command Enhancement**: Added complexity-based workflow paths to `prompter guide`
+  - Small complexity: Brief → FSD → Design System → Stories
+  - Medium complexity: Brief → PRD → FSD → UI → Design System → Stories
+  - High complexity: Brief → PRD → FSD → ERD → API → UI → Design System → TDD → Epics → Stories
+  - Provides quick reference for document generation based on project complexity
+  - Integrated into existing guide output after workflow dependencies section
+
 ## [0.6.14] - 2026-01-26
 
 ### 🔧 Fixed

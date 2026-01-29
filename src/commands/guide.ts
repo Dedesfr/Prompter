@@ -37,5 +37,10 @@ export class GuideCommand {
         console.log(chalk.gray('  • Strictly Required: Must-have inputs for high-quality output'));
         console.log(chalk.gray('  • Recommended Extra: Optional inputs that improve document quality'));
         console.log(chalk.gray('  • (new) = For new projects  |  (existing) = For existing projects\n'));
+
+        console.log(chalk.blue('Complexity-Based Workflows:'));
+        console.log(chalk.gray('  Small   → Brief → FSD → Design System → Stories'));
+        console.log(chalk.gray('  Medium  → Brief → PRD → FSD → UI → Design System → Stories'));
+        console.log(chalk.gray('  High    → Brief → PRD → FSD → ERD → API → UI → Design System → TDD → Epics → Stories'));
     }
 }
