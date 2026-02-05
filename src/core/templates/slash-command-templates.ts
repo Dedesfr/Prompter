@@ -1,9 +1,12 @@
 import {
     API_CONTRACT_GENERATOR_TEMPLATE,
+    APPLY_TEMPLATE,
+    ARCHIVE_TEMPLATE,
     DESIGN_SYSTEM_TEMPLATE,
     EPIC_GENERATOR_TEMPLATE,
     ERD_GENERATOR_TEMPLATE,
     FSD_GENERATOR_TEMPLATE,
+    PROPOSAL_TEMPLATE,
     STORY_GENERATOR_TEMPLATE,
     TDD_GENERATOR_TEMPLATE,
     TDD_LITE_GENERATOR_TEMPLATE,
@@ -11,7 +14,7 @@ import {
     DOCUMENT_EXPLAINER_TEMPLATE
 } from '../prompt-templates.js';
 
-export type SlashCommandId = 'enhance' | 'prd-generator' | 'prd-agent-generator' | 'product-brief' | 'epic-single' | 'epic-generator' | 'story-single' | 'story-generator' | 'qa-test-scenario' | 'skill-creator' | 'ai-humanizer' | 'api-contract-generator' | 'design-system' | 'erd-generator' | 'fsd-generator' | 'tdd-generator' | 'tdd-lite-generator' | 'wireframe-generator' | 'document-explainer';
+export type SlashCommandId = 'enhance' | 'prd-generator' | 'prd-agent-generator' | 'product-brief' | 'epic-single' | 'epic-generator' | 'story-single' | 'story-generator' | 'qa-test-scenario' | 'skill-creator' | 'ai-humanizer' | 'api-contract-generator' | 'apply' | 'archive' | 'design-system' | 'erd-generator' | 'fsd-generator' | 'proposal' | 'tdd-generator' | 'tdd-lite-generator' | 'wireframe-generator' | 'document-explainer';
 
 const enhanceWorkflow = `## MUST FOLLOW
 - Response Language: {User Request Language}
@@ -1042,9 +1045,12 @@ export const slashCommandBodies: Record<SlashCommandId, string> = {
     'skill-creator': skillCreatorWorkflow,
     'ai-humanizer': aiHumanizerWorkflow,
     'api-contract-generator': API_CONTRACT_GENERATOR_TEMPLATE,
+    'apply': APPLY_TEMPLATE,
+    'archive': ARCHIVE_TEMPLATE,
     'design-system': DESIGN_SYSTEM_TEMPLATE,
     'erd-generator': ERD_GENERATOR_TEMPLATE,
     'fsd-generator': FSD_GENERATOR_TEMPLATE,
+    'proposal': PROPOSAL_TEMPLATE,
     'tdd-generator': TDD_GENERATOR_TEMPLATE,
     'tdd-lite-generator': TDD_LITE_GENERATOR_TEMPLATE,
     'wireframe-generator': WIREFRAME_GENERATOR_TEMPLATE,

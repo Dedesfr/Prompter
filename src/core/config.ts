@@ -45,6 +45,18 @@ export const AVAILABLE_PROMPTS: PromptChoice[] = [
         sourceFile: 'api-contract-generator.md'
     },
     {
+        name: 'Apply',
+        value: 'apply',
+        description: 'Implement and apply an approved change proposal',
+        sourceFile: 'apply.md'
+    },
+    {
+        name: 'Archive',
+        value: 'archive',
+        description: 'Archive a completed change and update specs',
+        sourceFile: 'archive.md'
+    },
+    {
         name: 'Design System',
         value: 'design-system',
         description: 'Generate comprehensive design system documentation for components and tokens',
@@ -97,6 +109,12 @@ export const AVAILABLE_PROMPTS: PromptChoice[] = [
         value: 'product-brief',
         description: 'Create concise product brief documents',
         sourceFile: 'product-brief.md'
+    },
+    {
+        name: 'Proposal',
+        value: 'proposal',
+        description: 'Create a new change proposal with spec deltas',
+        sourceFile: 'proposal.md'
     },
     {
         name: 'QA Test Scenario',

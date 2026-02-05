@@ -40,7 +40,11 @@
     "dependencies": {
         "chalk": "^5.3.0",
         "commander": "^12.1.0",
-        "@inquirer/prompts": "^7.2.3"
+        "@inquirer/prompts": "^7.2.3",
+        "ora": "^8.2.0",
+        "zod": "^4.0.17",
+        "yaml": "^2.8.2",
+        "fast-glob": "^3.3.3"
     },
     "devDependencies": {
         "@types/node": "^22.10.7",
