@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [0.7.0] - 2026-02-06
+
+### ✨ Added
+- Added Proposal, Apply, and Archive commands and workflows
+  
 ## [0.6.15] - 2026-01-29
 
 ### ✨ Added
