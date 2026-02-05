@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## [0.7.2] - 2026-02-06
+
+### 🔄 Changed
+- Remove `prompter update` command from agents-template documentation
+  - Prevents confusion since `prompter update` is no longer a valid command
+  - Updated AGENTS.md template to reflect current command set
+
 ## [0.7.1] - 2026-02-06
 
 ### 🔧 Fixed

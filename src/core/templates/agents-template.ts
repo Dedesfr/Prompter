@@ -100,7 +100,6 @@ prompter archive <change-id> [--yes|-y]   # Archive after deployment (add --yes 
 
 # Project management
 prompter init [path]           # Initialize Prompter
-prompter update [path]         # Update instruction files
 
 # Interactive mode
 prompter show                  # Prompts for selection
