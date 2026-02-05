@@ -1,6 +1,6 @@
 {
     "name": "@dedesfr/prompter",
-    "version": "0.7.0",
+    "version": "0.7.1",
     "description": "Enhance prompts directly in your AI coding workflow",
     "type": "module",
     "main": "dist/index.js",

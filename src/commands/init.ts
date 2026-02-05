@@ -120,18 +120,32 @@ export class InitCommand {
         const projectMdPath = path.join(prompterPath, 'project.md');
         const projectMdExists = await this.fileExists(projectMdPath);
         if (!projectMdExists) {
-            await fs.writeFile(projectMdPath, projectTemplate, 'utf-8');
-            console.log(chalk.green('✓') + ` Created ${chalk.cyan(PROMPTER_DIR + '/project.md')}`);
+            try {
+                if (!projectTemplate) {
+                    throw new Error('project.md template is undefined');
+                }
+                await fs.writeFile(projectMdPath, projectTemplate, 'utf-8');
+                console.log(chalk.green('✓') + ` Created ${chalk.cyan(PROMPTER_DIR + '/project.md')}`);
+            } catch (error) {
+                console.error(chalk.red('✗') + ` Failed to create project.md: ${error}`);
+            }
         } else if (isReInitialization) {
             console.log(chalk.gray('  project.md already exists, keeping it'));
         }
 
         // Create AGENTS.md for universal support
-        const agentsMdPath = path.join(projectPath, 'AGENTS.md');
+        const agentsMdPath = path.join(prompterPath, 'AGENTS.md');
         const agentsExists = await this.fileExists(agentsMdPath);
         if (!agentsExists) {
-            await fs.writeFile(agentsMdPath, agentsTemplate, 'utf-8');
-            console.log(chalk.green('✓') + ` Created ${chalk.cyan('AGENTS.md')}`);
+            try {
+                if (!agentsTemplate) {
+                    throw new Error('AGENTS.md template is undefined');
+                }
+                await fs.writeFile(agentsMdPath, agentsTemplate, 'utf-8');
+                console.log(chalk.green('✓') + ` Created ${chalk.cyan(PROMPTER_DIR + '/AGENTS.md')}`);
+            } catch (error) {
+                console.error(chalk.red('✗') + ` Failed to create AGENTS.md: ${error}`);
+            }
         } else {
             console.log(chalk.gray('  AGENTS.md already exists, skipping'));
         }

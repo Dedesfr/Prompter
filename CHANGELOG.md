@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [0.7.1] - 2026-02-06
+
+### 🔧 Fixed
+- **AGENTS.md Creation**: Fixed AGENTS.md not being created during first-time initialization
+  - Added proper error handling for both project.md and AGENTS.md creation
+  - Fixed AGENTS.md path to be created inside `prompter/` directory instead of root
+  - Added template validation to prevent undefined template errors
+  - Clear error messages now displayed if file creation fails
+
 ## [0.7.0] - 2026-02-06
 
 ### ✨ Added
