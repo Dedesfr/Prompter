@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## [0.7.3] - 2026-02-06
+
+### ✨ Added
+- Added `prompter archive` command to archive completed projects
+  - 
 ## [0.7.2] - 2026-02-06
 
 ### 🔄 Changed

@@ -1,3 +1,4 @@
+import ora from 'ora';
 import { Command } from 'commander';
 import { InitCommand } from '../commands/init.js';
 import { UpdateCommand } from '../commands/update.js';
@@ -10,13 +11,14 @@ import { registerSpecCommand } from '../commands/spec.js';
 import { registerConfigCommand } from '../commands/config.js';
 import { ValidateCommand } from '../commands/validate.js';
 import { ShowCommand } from '../commands/show.js';
+import { ArchiveCommand } from '../commands/archive.js';
 
 const program = new Command();
 
 program
     .name('prompter')
     .description('Enhance prompts directly in your AI coding workflow')
-    .version('0.7.2');
+    .version('0.7.3');
 
 program
     .command('init')
@@ -144,6 +146,23 @@ changeCmd
     } catch (error) {
       console.error(`Error: ${(error as Error).message}`);
       process.exitCode = 1;
+    }
+  });
+
+program
+  .command('archive [change-name]')
+  .description('Archive a completed change and update main specs')
+  .option('-y, --yes', 'Skip confirmation prompts')
+  .option('--skip-specs', 'Skip spec update operations (useful for infrastructure, tooling, or doc-only changes)')
+  .option('--no-validate', 'Skip validation (not recommended, requires confirmation)')
+  .action(async (changeName?: string, options?: { yes?: boolean; skipSpecs?: boolean; noValidate?: boolean; validate?: boolean }) => {
+    try {
+      const archiveCommand = new ArchiveCommand();
+      await archiveCommand.execute(changeName, options);
+    } catch (error) {
+      console.log(); // Empty line for spacing
+      ora().fail(`Error: ${(error as Error).message}`);
+      process.exit(1);
     }
   });
 
