@@ -1,10 +1,29 @@
 # CHANGELOG
 
+## [0.7.4] - 2026-02-06
+
+### ✨ Added
+- **Categorized Prompt Selection**: Reorganized `prompter init` prompt selection into logical categories
+  - 7 new categories: Product Planning, Specification, Agile, Testing, Design, Development Workflow, and Content
+  - Improved UI with bold headers and indented descriptions for better readability
+- **Recommended AI Models**: Added model recommendations to `prompter guide` for each document type
+  - Suggested models including Claude 3.5 Sonnet, Claude 3 Opus, Gemini 3 Pro/Flash, and GPT 5.2 Codex
+- **Everyday Development Workflow**: Added a standout "Recommended Everyday Workflow" to `prompter guide`
+  - Visualized Step 1 (Foundation): Brief → PRD → Epic
+  - Visualized Step 2 (Development Loop): [ Proposal ⇄ Apply ⇄ Archive ] ↺
+  - Highlighted with 🚀 emoji and bold styling for better visibility
+
+### 🔄 Changed
+- **Guide Command Enhancement**: Expanded document workflow table in `prompter guide`
+  - Added "Recommended Model" column
+  - Added Proposal and Apply rows to the dependency tracking table
+  - Updated terminology for better clarity on required vs. extra inputs
+
 ## [0.7.3] - 2026-02-06
 
 ### ✨ Added
 - Added `prompter archive` command to archive completed projects
-  - 
+
 ## [0.7.2] - 2026-02-06
 
 ### 🔄 Changed

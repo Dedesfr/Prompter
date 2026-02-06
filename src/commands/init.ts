@@ -1,7 +1,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import chalk from 'chalk';
-import { checkbox } from '@inquirer/prompts';
+import { checkbox, Separator } from '@inquirer/prompts';
 import { PROMPTER_DIR, SUPPORTED_TOOLS, AVAILABLE_PROMPTS, PrompterConfig } from '../core/config.js';
 import { projectTemplate, agentsTemplate } from '../core/templates/index.js';
 import { PROMPT_TEMPLATES } from '../core/prompt-templates.js';
@@ -15,6 +15,58 @@ interface InitOptions {
 }
 
 export class InitCommand {
+    private getCategorizedPromptChoices(currentPrompts: string[]): any[] {
+        const categories = [
+            {
+                name: '📋 Product Planning & Strategy',
+                prompts: ['product-brief', 'prd-generator', 'prd-agent-generator']
+            },
+            {
+                name: '📐 Specification & Documentation',
+                prompts: ['fsd-generator', 'tdd-generator', 'tdd-lite-generator', 'erd-generator', 'api-contract-generator']
+            },
+            {
+                name: '🎯 Agile & Project Management',
+                prompts: ['epic-single', 'epic-generator', 'story-single', 'story-generator']
+            },
+            {
+                name: '✅ Testing & Quality Assurance',
+                prompts: ['qa-test-scenario']
+            },
+            {
+                name: '🎨 Design & UI/UX',
+                prompts: ['design-system', 'wireframe-generator']
+            },
+            {
+                name: '⚙️ Development Workflow',
+                prompts: ['proposal', 'apply', 'archive']
+            },
+            {
+                name: '📝 Content & Documentation',
+                prompts: ['ai-humanizer', 'document-explainer', 'skill-creator']
+            }
+        ];
+
+        const choices: any[] = [];
+
+        for (const category of categories) {
+            choices.push(new Separator(chalk.bold.cyan(category.name)));
+            
+            for (const promptValue of category.prompts) {
+                const prompt = AVAILABLE_PROMPTS.find(p => p.value === promptValue);
+                if (prompt) {
+                    choices.push({
+                        name: `  ${prompt.name} ${chalk.gray('- ' + prompt.description)}`,
+                        value: prompt.value,
+                        checked: currentPrompts.includes(prompt.value)
+                    });
+                }
+            }
+        }
+
+        return choices;
+    }
+
     async execute(options: InitOptions = {}): Promise<void> {
         const projectPath = process.cwd();
         const isReInitialization = await PrompterConfig.prompterDirExists(projectPath);
@@ -96,12 +148,8 @@ export class InitCommand {
                 
                 selectedPrompts = await checkbox({
                     message: 'Select prompt templates to install:',
-                    choices: AVAILABLE_PROMPTS.map(prompt => ({
-                        name: `${prompt.name} - ${chalk.gray(prompt.description)}`,
-                        value: prompt.value,
-                        checked: currentPrompts.includes(prompt.value)
-                    })),
-                    pageSize: 15
+                    choices: this.getCategorizedPromptChoices(currentPrompts),
+                    pageSize: 20
                 });
             } catch (error) {
                 // User cancelled
