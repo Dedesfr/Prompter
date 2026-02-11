@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [0.7.6] - 2026-02-11
+
+### ✨ Added
+- **Post-Implementation Tasks**: Enhanced `tasks.md` template to include Post-Implementation section
+  - Automatically adds reminder to update `AGENTS.md` in project root after implementation
+  - Ensures AI agents remember to document new changes in the project knowledge base
+  - Improves consistency in maintaining project documentation
+
 ## [0.7.5] - 2026-02-11
 
 ### ✨ Added

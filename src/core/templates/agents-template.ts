@@ -201,6 +201,9 @@ If multiple capabilities are affected, create multiple delta files under \`chang
 - [ ] 1.2 Implement API endpoint
 - [ ] 1.3 Add frontend component
 - [ ] 1.4 Write tests
+
+## Post-Implementation
+- [ ] Update AGENTS.md in the project root for new changes in this specs
 \`\`\`
 
 5. **Create design.md when needed:**
