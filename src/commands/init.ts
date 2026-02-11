@@ -198,6 +198,9 @@ export class InitCommand {
             console.log(chalk.gray('  AGENTS.md already exists, skipping'));
         }
 
+        // Ensure root AGENTS.md has Prompter instructions
+        await this.ensureRootAgentsFile(projectPath);
+
         // Handle tool changes
         const toolsToAdd = selectedTools.filter(t => !currentTools.includes(t));
         const toolsToRemove = currentTools.filter(t => !selectedTools.includes(t));
@@ -531,6 +534,58 @@ export class InitCommand {
                 } catch (error) {
                     // Silently ignore errors for workflow file removal
                 }
+            }
+        }
+    }
+
+    private async ensureRootAgentsFile(projectPath: string): Promise<void> {
+        const rootAgentsPath = path.join(projectPath, 'AGENTS.md');
+        const instructionsBlock = `<!-- PROMPTER:START -->
+# Prompter Instructions
+
+These instructions are for AI assistants working in this project.
+
+Always open \`@/prompter/AGENTS.md\` when the request:
+- Mentions planning or proposals (words like proposal, spec, change, plan)
+- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
+- Sounds ambiguous and you need the authoritative spec before coding
+
+Use \`@/prompter/AGENTS.md\` to learn:
+- How to create and apply change proposals
+- Spec format and conventions
+- Project structure and guidelines
+- Show Remaining Tasks
+
+<!-- PROMPTER:END -->`;
+
+        const rootAgentsExists = await this.fileExists(rootAgentsPath);
+        
+        if (!rootAgentsExists) {
+            // Create new file with instructions block
+            await fs.writeFile(rootAgentsPath, instructionsBlock + '\n', 'utf-8');
+            console.log(chalk.green('✓') + ` Created ${chalk.cyan('AGENTS.md')} in root`);
+        } else {
+            // Read existing file
+            const content = await fs.readFile(rootAgentsPath, 'utf-8');
+            
+            // Check if instructions block already exists
+            const startMarker = '<!-- PROMPTER:START -->';
+            const endMarker = '<!-- PROMPTER:END -->';
+            const startIndex = content.indexOf(startMarker);
+            const endIndex = content.indexOf(endMarker);
+            
+            if (startIndex === -1 || endIndex === -1) {
+                // Add instructions block at the top
+                const updatedContent = instructionsBlock + '\n\n' + content;
+                await fs.writeFile(rootAgentsPath, updatedContent, 'utf-8');
+                console.log(chalk.green('✓') + ` Added Prompter instructions to ${chalk.cyan('AGENTS.md')}`);
+            } else {
+                // Replace existing block
+                const before = content.substring(0, startIndex);
+                const after = content.substring(endIndex + endMarker.length);
+                const updatedContent = before + instructionsBlock + after;
+                await fs.writeFile(rootAgentsPath, updatedContent, 'utf-8');
+                console.log(chalk.gray('  AGENTS.md instructions block already exists, updated'));
             }
         }
     }

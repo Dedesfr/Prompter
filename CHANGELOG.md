@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [0.7.5] - 2026-02-11
+
+### ✨ Added
+- **Automatic Root AGENTS.md Creation**: `prompter init` now automatically creates or updates `AGENTS.md` in the project root
+  - Adds Prompter instructions block at the top of the file to guide AI assistants
+  - Instructions include guidance on when to open `@/prompter/AGENTS.md` for planning and proposals
+  - Uses managed markers (`<!-- PROMPTER:START -->` and `<!-- PROMPTER:END -->`) for safe updates
+  - Creates new file if missing, or prepends instructions to existing files
+
 ## [0.7.4] - 2026-02-06
 
 ### ✨ Added
