@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [0.7.7] - 2026-02-11
+
+### ✨ Added
+- **Automatic AGENTS.md Updates**: `prompter init` now automatically updates `prompter/AGENTS.md` during re-initialization
+  - Previously only created AGENTS.md on first initialization
+  - Now ensures latest template content is always applied
+  - Shows "Updated" message when refreshing existing AGENTS.md files
+  - Maintains consistency with prompt template update behavior
+
 ## [0.7.6] - 2026-02-11
 
 ### ✨ Added
