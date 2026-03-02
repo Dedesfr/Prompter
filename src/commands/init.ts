@@ -3,7 +3,7 @@ import path from 'path';
 import chalk from 'chalk';
 import { checkbox, Separator } from '@inquirer/prompts';
 import { PROMPTER_DIR, SUPPORTED_TOOLS, AVAILABLE_PROMPTS, PrompterConfig } from '../core/config.js';
-import { projectTemplate, agentsTemplate } from '../core/templates/index.js';
+import { projectTemplate, agentsTemplate, claudeTemplate } from '../core/templates/index.js';
 import { PROMPT_TEMPLATES } from '../core/prompt-templates.js';
 import { registry } from '../core/configurators/slash/index.js';
 import { SlashCommandId } from '../core/templates/index.js';
@@ -198,8 +198,28 @@ export class InitCommand {
             console.error(chalk.red('✗') + ` Failed to ${agentsExists ? 'update' : 'create'} AGENTS.md: ${error}`);
         }
 
+        // Create or update CLAUDE.md for Claude Code support
+        const claudeMdPath = path.join(prompterPath, 'CLAUDE.md');
+        const claudeExists = await this.fileExists(claudeMdPath);
+        try {
+            if (!claudeTemplate) {
+                throw new Error('CLAUDE.md template is undefined');
+            }
+            await fs.writeFile(claudeMdPath, claudeTemplate, 'utf-8');
+            if (!claudeExists) {
+                console.log(chalk.green('✓') + ` Created ${chalk.cyan(PROMPTER_DIR + '/CLAUDE.md')}`);
+            } else if (isReInitialization) {
+                console.log(chalk.green('✓') + ` Updated ${chalk.cyan(PROMPTER_DIR + '/CLAUDE.md')}`);
+            }
+        } catch (error) {
+            console.error(chalk.red('✗') + ` Failed to ${claudeExists ? 'update' : 'create'} CLAUDE.md: ${error}`);
+        }
+
         // Ensure root AGENTS.md has Prompter instructions
         await this.ensureRootAgentsFile(projectPath);
+
+        // Ensure root CLAUDE.md has Prompter instructions
+        await this.ensureRootClaudeFile(projectPath);
 
         // Handle tool changes
         const toolsToAdd = selectedTools.filter(t => !currentTools.includes(t));
@@ -534,6 +554,52 @@ export class InitCommand {
                 } catch (error) {
                     // Silently ignore errors for workflow file removal
                 }
+            }
+        }
+    }
+
+    private async ensureRootClaudeFile(projectPath: string): Promise<void> {
+        const rootClaudePath = path.join(projectPath, 'CLAUDE.md');
+        const instructionsBlock = `<!-- PROMPTER:START -->
+# Prompter Instructions
+
+These instructions are for AI assistants working in this project.
+
+Always open \`@/prompter/CLAUDE.md\` when the request:
+- Mentions planning or proposals (words like proposal, spec, change, plan)
+- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
+- Sounds ambiguous and you need the authoritative spec before coding
+
+Use \`@/prompter/CLAUDE.md\` to learn:
+- How to create and apply change proposals
+- Spec format and conventions
+- Project structure and guidelines
+- Show Remaining Tasks
+
+<!-- PROMPTER:END -->`;
+
+        const rootClaudeExists = await this.fileExists(rootClaudePath);
+
+        if (!rootClaudeExists) {
+            await fs.writeFile(rootClaudePath, instructionsBlock + '\n', 'utf-8');
+            console.log(chalk.green('✓') + ` Created ${chalk.cyan('CLAUDE.md')} in root`);
+        } else {
+            const content = await fs.readFile(rootClaudePath, 'utf-8');
+            const startMarker = '<!-- PROMPTER:START -->';
+            const endMarker = '<!-- PROMPTER:END -->';
+            const startIndex = content.indexOf(startMarker);
+            const endIndex = content.indexOf(endMarker);
+
+            if (startIndex === -1 || endIndex === -1) {
+                const updatedContent = instructionsBlock + '\n\n' + content;
+                await fs.writeFile(rootClaudePath, updatedContent, 'utf-8');
+                console.log(chalk.green('✓') + ` Added Prompter instructions to ${chalk.cyan('CLAUDE.md')}`);
+            } else {
+                const before = content.substring(0, startIndex);
+                const after = content.substring(endIndex + endMarker.length);
+                const updatedContent = before + instructionsBlock + after;
+                await fs.writeFile(rootClaudePath, updatedContent, 'utf-8');
+                console.log(chalk.gray('  CLAUDE.md instructions block already exists, updated'));
             }
         }
     }
