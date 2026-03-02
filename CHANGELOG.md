@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [0.7.8] - 2026-03-03
+
+### ✨ Added
+- **CLAUDE.md Support**: `prompter init` now generates `CLAUDE.md` alongside `AGENTS.md` for Claude Code compatibility
+  - Creates `prompter/CLAUDE.md` with full Prompter workflow instructions
+  - Creates root `CLAUDE.md` with managed instructions block pointing to `@/prompter/CLAUDE.md`
+  - Updates both files on re-initialization, consistent with AGENTS.md behavior
+  - Enables Claude Code to automatically pick up Prompter conventions without manual setup
+
 ## [0.7.7] - 2026-02-11
 
 ### ✨ Added
