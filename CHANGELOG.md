@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [0.7.9] - 2026-03-29
+
+### ✨ Added
+- **Forge Tool Support**: `prompter init` now supports Forge as an AI tool
+  - Generates workflow files under `.forge/commands/prompter/`
+  - Full support for all prompt templates
+- **Droid Tool Support**: `prompter init` now supports Droid as an AI tool
+  - Generates workflow files under `.factory/commands/prompter/`
+  - Full support for all prompt templates
+
 ## [0.7.8] - 2026-03-03
 
 ### ✨ Added

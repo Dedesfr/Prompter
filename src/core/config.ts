@@ -28,7 +28,9 @@ export const SUPPORTED_TOOLS: ToolChoice[] = [
     { name: 'Codex', value: 'codex', available: true, successLabel: 'Codex' },
     { name: 'GitHub Copilot', value: 'github-copilot', available: true, successLabel: 'GitHub Copilot' },
     { name: 'OpenCode', value: 'opencode', available: true, successLabel: 'OpenCode' },
-    { name: 'Kilo Code', value: 'kilocode', available: true, successLabel: 'Kilo Code' }
+    { name: 'Kilo Code', value: 'kilocode', available: true, successLabel: 'Kilo Code' },
+    { name: 'Forge', value: 'forge', available: true, successLabel: 'Forge' },
+    { name: 'Droid', value: 'droid', available: true, successLabel: 'Droid' }
 ];
 
 export const AVAILABLE_PROMPTS: PromptChoice[] = [

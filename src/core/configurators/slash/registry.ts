@@ -5,6 +5,8 @@ import { CodexConfigurator } from './codex.js';
 import { GithubCopilotConfigurator } from './github-copilot.js';
 import { OpenCodeConfigurator } from './opencode.js';
 import { KiloCodeConfigurator } from './kilocode.js';
+import { ForgeConfigurator } from './forge.js';
+import { DroidConfigurator } from './droid.js';
 
 export class ConfiguratorRegistry {
     private configurators: Map<string, SlashCommandConfigurator> = new Map();
@@ -16,6 +18,8 @@ export class ConfiguratorRegistry {
         const githubCopilot = new GithubCopilotConfigurator();
         const opencode = new OpenCodeConfigurator();
         const kilocode = new KiloCodeConfigurator();
+        const forge = new ForgeConfigurator();
+        const droid = new DroidConfigurator();
 
         this.configurators.set(antigravity.toolId, antigravity);
         this.configurators.set(claude.toolId, claude);
@@ -23,6 +27,8 @@ export class ConfiguratorRegistry {
         this.configurators.set(githubCopilot.toolId, githubCopilot);
         this.configurators.set(opencode.toolId, opencode);
         this.configurators.set(kilocode.toolId, kilocode);
+        this.configurators.set(forge.toolId, forge);
+        this.configurators.set(droid.toolId, droid);
     }
 
     get(toolId: string): SlashCommandConfigurator | undefined {

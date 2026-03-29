@@ -6,3 +6,5 @@ export { CodexConfigurator } from './codex.js';
 export { GithubCopilotConfigurator } from './github-copilot.js';
 export { OpenCodeConfigurator } from './opencode.js';
 export { KiloCodeConfigurator } from './kilocode.js';
+export { ForgeConfigurator } from './forge.js';
+export { DroidConfigurator } from './droid.js';
