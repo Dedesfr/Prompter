@@ -4,6 +4,7 @@ import path from 'path';
 import { PrompterConfig, AVAILABLE_PROMPTS, PROMPTER_DIR } from '../core/config.js';
 import { registry } from '../core/configurators/slash/index.js';
 import { PROMPT_TEMPLATES } from '../core/prompt-templates.js';
+import { discoverSkills } from '../core/skill-discovery.js';
 
 export class UpdateCommand {
     async execute(): Promise<void> {
@@ -54,6 +55,27 @@ export class UpdateCommand {
         for (const promptName of updatedCorePrompts) {
             console.log(chalk.green('✓') + ` Updated ${chalk.cyan(`${PROMPTER_DIR}/core/${promptName}`)}`);
             updatedCount++;
+        }
+
+        // Update existing skill workflow files
+        const skillsDir = path.join(projectPath, 'skills');
+        const availableSkills = await discoverSkills(skillsDir);
+
+        if (availableSkills.length > 0) {
+            for (const toolId of configuredTools) {
+                const configurator = registry.get(toolId);
+                if (!configurator) continue;
+
+                try {
+                    const updatedSkillFiles = await configurator.updateExistingSkills(projectPath, availableSkills);
+                    for (const file of updatedSkillFiles) {
+                        console.log(chalk.green('✓') + ` Updated ${chalk.cyan(file)}`);
+                        updatedCount++;
+                    }
+                } catch (error) {
+                    console.log(chalk.red('✗') + ` Failed to update skills for ${configurator.toolId}: ${error}`);
+                }
+            }
         }
 
         if (updatedCount === 0) {

@@ -1,5 +1,35 @@
 # CHANGELOG
 
+## [0.8.0] - 2026-03-29
+
+### ✨ Added
+- **Skills Support**: `prompter init` now detects, selects, and installs skills from the `skills/` directory
+  - Automatically scans `skills/` for any subdirectory containing a `SKILL.md` with valid frontmatter (`name`, `description`)
+  - Interactive checkbox selection — similar to custom command selection — appears during `prompter init` when skills are available
+  - Pre-checks currently installed skills on re-initialization for easy add/remove
+  - Supports `--skills <names...>` flag for non-interactive/CI usage (e.g. `prompter init --skills laravel-code-review`)
+- **Full Skill Directory Deployment**: Each selected skill is deployed as a complete directory to every configured AI tool
+  - Copies the entire skill package (SKILL.md + scripts/ + references/ + assets/) — not just a single markdown file
+  - Tool-specific skill locations:
+    - Claude Code: `.claude/skills/{name}/`
+    - Antigravity: `.agent/skills/{name}/`
+    - Codex: `.codex/skills/{name}/`
+    - GitHub Copilot: `.github/skills/{name}/`
+    - OpenCode: `.opencode/skills/{name}/`
+    - Kilo Code: `.kilocode/skills/{name}/`
+    - Forge: `.forge/skills/{name}/`
+    - Droid: `.factory/skills/{name}/`
+  - Also installs to `prompter/skills/{name}/` as the local project reference copy
+- **Skill Lifecycle Management**: Full add/remove/update support
+  - Adding a skill installs it to `prompter/skills/` and generates directories for all configured tools
+  - Removing a skill (unchecking on re-init) deletes it from `prompter/skills/` and all tool directories
+  - Re-running `prompter init` or `prompter update` refreshes skill files from source
+- **`prompter update` Skill Sync**: Update command now re-syncs all installed skill directories from `skills/` source
+- **Skill Discovery Module**: New internal `src/core/skill-discovery.ts` module
+  - Parses YAML frontmatter and body from `SKILL.md` files
+  - Returns structured `SkillMetadata` for use across init and update flows
+- **Init Summary Enhancement**: Skills added/removed now shown in the re-initialization summary alongside tools and prompts
+
 ## [0.7.9] - 2026-03-29
 
 ### ✨ Added

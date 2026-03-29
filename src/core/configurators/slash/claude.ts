@@ -63,4 +63,8 @@ export class ClaudeConfigurator extends SlashCommandConfigurator {
         // Claude Code uses the filename as the command name
         return undefined;
     }
+
+    protected getSkillTargetDir(skillName: string): string {
+        return `.claude/skills/${skillName}`;
+    }
 }

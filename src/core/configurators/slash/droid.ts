@@ -37,4 +37,8 @@ export class DroidConfigurator extends SlashCommandConfigurator {
     protected getFrontmatter(id: SlashCommandId): string | undefined {
         return undefined;
     }
+
+    protected getSkillTargetDir(skillName: string): string {
+        return `.factory/skills/${skillName}`;
+    }
 }

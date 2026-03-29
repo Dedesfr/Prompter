@@ -63,4 +63,8 @@ export class OpenCodeConfigurator extends SlashCommandConfigurator {
         const description = DESCRIPTIONS[id];
         return `---\nagent: build\ndescription: ${description}\n---`;
     }
+
+    protected getSkillTargetDir(skillName: string): string {
+        return `.opencode/skills/${skillName}`;
+    }
 }

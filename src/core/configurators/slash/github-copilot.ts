@@ -99,6 +99,10 @@ export class GithubCopilotConfigurator extends SlashCommandConfigurator {
         return createdOrUpdated;
     }
 
+    protected getSkillTargetDir(skillName: string): string {
+        return `.github/skills/${skillName}`;
+    }
+
     private async checkFileExists(filePath: string): Promise<boolean> {
         try {
             await fs.access(filePath);

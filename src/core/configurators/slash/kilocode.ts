@@ -63,4 +63,8 @@ export class KiloCodeConfigurator extends SlashCommandConfigurator {
         const description = DESCRIPTIONS[id];
         return `---\ndescription: ${description}\n---`;
     }
+
+    protected getSkillTargetDir(skillName: string): string {
+        return `.kilocode/skills/${skillName}`;
+    }
 }

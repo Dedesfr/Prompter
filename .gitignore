@@ -23,3 +23,8 @@ coverage/
 
 # Prompter output (for development)
 prompter/
+.claude
+.factory
+.forge
+.github
+.agent

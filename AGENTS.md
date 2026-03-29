@@ -1,3 +1,21 @@
+<!-- PROMPTER:START -->
+# Prompter Instructions
+
+These instructions are for AI assistants working in this project.
+
+Always open `@/prompter/AGENTS.md` when the request:
+- Mentions planning or proposals (words like proposal, spec, change, plan)
+- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
+- Sounds ambiguous and you need the authoritative spec before coding
+
+Use `@/prompter/AGENTS.md` to learn:
+- How to create and apply change proposals
+- Spec format and conventions
+- Project structure and guidelines
+- Show Remaining Tasks
+
+<!-- PROMPTER:END -->
+
 # AGENTS — Project Knowledge Base
 ## 1. 📍 Project Summary
 Prompter CLI is a local-first developer tool that scaffolds and maintains AI workflow prompt templates. It initializes a `prompter/` workspace, generates slash-command templates for multiple AI coding tools, and lists enhanced prompts created by those workflows.

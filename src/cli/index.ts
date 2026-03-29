@@ -18,13 +18,14 @@ const program = new Command();
 program
     .name('prompter')
     .description('Enhance prompts directly in your AI coding workflow')
-    .version('0.7.9');
+    .version('0.8.0');
 
 program
     .command('init')
     .description('Initialize Prompter in your project')
     .option('--tools <tools...>', 'Specify AI tools to configure (antigravity, claude, codex, github-copilot, opencode, kilocode)')
     .option('--prompts <prompts...>', 'Specify prompts to install (ai-humanizer, api-contract-generator, apply, archive, design-system, document-explainer, epic-single, epic-generator, erd-generator, fsd-generator, prd-agent-generator, prd-generator, product-brief, proposal, qa-test-scenario, skill-creator, story-single, story-generator, tdd-generator, tdd-lite-generator, wireframe-generator)')
+    .option('--skills <skills...>', 'Specify skills to install by name (e.g. laravel-code-review design-system-generator)')
     .option('--no-interactive', 'Run without interactive prompts')
     .action(async (options) => {
         const initCommand = new InitCommand();

@@ -7,10 +7,12 @@ import { projectTemplate, agentsTemplate, claudeTemplate } from '../core/templat
 import { PROMPT_TEMPLATES } from '../core/prompt-templates.js';
 import { registry } from '../core/configurators/slash/index.js';
 import { SlashCommandId } from '../core/templates/index.js';
+import { discoverSkills, SkillMetadata } from '../core/skill-discovery.js';
 
 interface InitOptions {
     tools?: string[];
     prompts?: string[];
+    skills?: string[];
     noInteractive?: boolean;
 }
 
@@ -145,12 +147,40 @@ export class InitCommand {
                 // Detect currently installed prompts (use path.join to get prompter path)
                 const prompterPathForDetection = path.join(projectPath, PROMPTER_DIR);
                 const currentPrompts = await this.detectInstalledPrompts(prompterPathForDetection);
-                
+
                 selectedPrompts = await checkbox({
                     message: 'Select prompt templates to install:',
                     choices: this.getCategorizedPromptChoices(currentPrompts),
                     pageSize: 20
                 });
+            } catch (error) {
+                // User cancelled
+                console.log(chalk.yellow(isReInitialization ? '\nRe-configuration cancelled.' : '\nInitialization cancelled.'));
+                return;
+            }
+        }
+
+        // Select skills
+        const availableSkills = await discoverSkills(path.join(projectPath, 'skills'));
+        let selectedSkills: SkillMetadata[] = [];
+
+        if (options.skills && options.skills.length > 0) {
+            const requestedNames = options.skills.flatMap(s => s.split(',').map(s => s.trim()));
+            selectedSkills = availableSkills.filter(s => requestedNames.includes(s.name));
+        } else if (!options.noInteractive && availableSkills.length > 0) {
+            try {
+                const prompterPathForDetection = path.join(projectPath, PROMPTER_DIR);
+                const currentSkillNames = await this.detectInstalledSkills(prompterPathForDetection);
+
+                const selectedSkillNames = await checkbox({
+                    message: 'Select skills to install:',
+                    choices: availableSkills.map(skill => ({
+                        name: `  ${skill.name}`,
+                        value: skill.name,
+                        checked: currentSkillNames.includes(skill.name)
+                    }))
+                });
+                selectedSkills = availableSkills.filter(s => selectedSkillNames.includes(s.name));
             } catch (error) {
                 // User cancelled
                 console.log(chalk.yellow(isReInitialization ? '\nRe-configuration cancelled.' : '\nInitialization cancelled.'));
@@ -349,10 +379,13 @@ export class InitCommand {
             }
         }
 
+        // --- Skills setup ---
+        const skillChanges = await this.setupSkills(projectPath, prompterPath, selectedTools, selectedSkills);
+
         // Success message
         if (isReInitialization) {
             console.log(chalk.green('\n✅ Prompter tools updated successfully!\n'));
-            if (toolsToAdd.length > 0 || toolsToRemove.length > 0 || promptsToAdd.length > 0 || promptsToRemove.length > 0) {
+            if (toolsToAdd.length > 0 || toolsToRemove.length > 0 || promptsToAdd.length > 0 || promptsToRemove.length > 0 || skillChanges.added.length > 0 || skillChanges.removed.length > 0) {
                 console.log(chalk.blue('Summary:'));
                 if (toolsToAdd.length > 0) {
                     console.log(chalk.green('  Tools Added: ') + toolsToAdd.map(t => {
@@ -378,6 +411,12 @@ export class InitCommand {
                         return prompt ? prompt.name : p;
                     }).join(', '));
                 }
+                if (skillChanges.added.length > 0) {
+                    console.log(chalk.green('  Skills Added: ') + skillChanges.added.join(', '));
+                }
+                if (skillChanges.removed.length > 0) {
+                    console.log(chalk.yellow('  Skills Removed: ') + skillChanges.removed.join(', '));
+                }
                 console.log();
             } else {
                 console.log(chalk.gray('  No changes made.\n'));
@@ -386,6 +425,9 @@ export class InitCommand {
             console.log(chalk.green('\n✅ Prompter initialized successfully!\n'));
             if (promptsToAdd.length > 0) {
                 console.log(chalk.gray(`Installed ${promptsToAdd.length} prompt template(s).\n`));
+            }
+            if (skillChanges.added.length > 0) {
+                console.log(chalk.gray(`Installed ${skillChanges.added.length} skill(s).\n`));
             }
             console.log(chalk.gray('Run `prompter guide` for next steps.\n'));
         }
@@ -600,6 +642,144 @@ Use \`@/prompter/CLAUDE.md\` to learn:
                 const updatedContent = before + instructionsBlock + after;
                 await fs.writeFile(rootClaudePath, updatedContent, 'utf-8');
                 console.log(chalk.gray('  CLAUDE.md instructions block already exists, updated'));
+            }
+        }
+    }
+
+    private async setupSkills(
+        projectPath: string,
+        prompterPath: string,
+        selectedTools: string[],
+        selectedSkills: SkillMetadata[]
+    ): Promise<{ added: string[]; removed: string[] }> {
+        const result = { added: [] as string[], removed: [] as string[] };
+
+        const installedSkillNames = await this.detectInstalledSkills(prompterPath);
+        const selectedSkillNames = selectedSkills.map(s => s.name);
+
+        const skillsToAdd = selectedSkills.filter(s => !installedSkillNames.includes(s.name));
+        const skillsToRemove = installedSkillNames.filter(n => !selectedSkillNames.includes(n));
+        const skillsToKeep = selectedSkills.filter(s => installedSkillNames.includes(s.name));
+
+        const skillsTargetDir = path.join(prompterPath, 'skills');
+
+        // Remove deselected skills
+        if (skillsToRemove.length > 0) {
+            console.log(chalk.blue('\n🗑️  Removing skills...\n'));
+
+            for (const skillName of skillsToRemove) {
+                const staleDir = path.join(skillsTargetDir, skillName);
+                try {
+                    await fs.rm(staleDir, { recursive: true, force: true });
+                    console.log(chalk.yellow('✓') + ` Removed skill ${chalk.cyan(skillName)}`);
+                    result.removed.push(skillName);
+                } catch {
+                    // ignore
+                }
+
+                for (const toolId of selectedTools) {
+                    const configurator = registry.get(toolId);
+                    if (!configurator) continue;
+                    const removed = await configurator.removeSkillFiles(projectPath, [skillName]);
+                    for (const file of removed) {
+                        console.log(chalk.yellow('✓') + ` Removed ${chalk.cyan(file)}`);
+                    }
+                }
+            }
+        }
+
+        // Install new skills
+        if (skillsToAdd.length > 0) {
+            console.log(chalk.blue('\n🧩 Installing skills...\n'));
+            await fs.mkdir(skillsTargetDir, { recursive: true });
+
+            for (const skill of skillsToAdd) {
+                const targetDir = path.join(skillsTargetDir, skill.name);
+                try {
+                    await this.copyDirectory(skill.sourcePath, targetDir);
+                    console.log(chalk.green('✓') + ` Installed skill ${chalk.cyan(skill.name)}`);
+                    result.added.push(skill.name);
+                } catch (error) {
+                    console.log(chalk.red('✗') + ` Failed to install skill ${skill.name}: ${error}`);
+                }
+            }
+
+            if (selectedTools.length > 0) {
+                console.log(chalk.blue('\n📝 Creating skill workflow files...\n'));
+                for (const toolId of selectedTools) {
+                    const configurator = registry.get(toolId);
+                    if (!configurator) continue;
+                    try {
+                        const files = await configurator.generateSkills(projectPath, skillsToAdd);
+                        for (const file of files) {
+                            console.log(chalk.green('✓') + ` Created ${chalk.cyan(file)}`);
+                        }
+                    } catch (error) {
+                        console.log(chalk.red('✗') + ` Failed to create skill files for ${toolId}: ${error}`);
+                    }
+                }
+            }
+        }
+
+        // Update kept skills
+        if (skillsToKeep.length > 0) {
+            await fs.mkdir(skillsTargetDir, { recursive: true });
+
+            for (const skill of skillsToKeep) {
+                const targetDir = path.join(skillsTargetDir, skill.name);
+                try {
+                    await this.copyDirectory(skill.sourcePath, targetDir);
+                } catch {
+                    // ignore update errors
+                }
+            }
+
+            for (const toolId of selectedTools) {
+                const configurator = registry.get(toolId);
+                if (!configurator) continue;
+                try {
+                    await configurator.generateSkills(projectPath, skillsToKeep);
+                } catch {
+                    // ignore
+                }
+            }
+        }
+
+        return result;
+    }
+
+    private async detectInstalledSkills(prompterPath: string): Promise<string[]> {
+        const skillsDir = path.join(prompterPath, 'skills');
+        const names: string[] = [];
+
+        try {
+            const entries = await fs.readdir(skillsDir, { withFileTypes: true });
+            for (const entry of entries) {
+                if (!entry.isDirectory()) continue;
+                const skillMdPath = path.join(skillsDir, entry.name, 'SKILL.md');
+                if (await this.fileExists(skillMdPath)) {
+                    names.push(entry.name);
+                }
+            }
+        } catch {
+            // skills directory doesn't exist yet
+        }
+
+        return names;
+    }
+
+    private async copyDirectory(src: string, dest: string): Promise<void> {
+        await fs.mkdir(dest, { recursive: true });
+        const entries = await fs.readdir(src, { withFileTypes: true });
+
+        for (const entry of entries) {
+            const srcPath = path.join(src, entry.name);
+            const destPath = path.join(dest, entry.name);
+
+            if (entry.isDirectory()) {
+                await this.copyDirectory(srcPath, destPath);
+            } else {
+                await fs.copyFile(srcPath, destPath);
             }
         }
     }
