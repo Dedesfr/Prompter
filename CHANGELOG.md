@@ -1,5 +1,34 @@
 # CHANGELOG
 
+## [0.8.1] - 2026-03-30
+
+### ✨ Added
+- **agents-md-generator Skill**: Generate or update `AGENTS.md` files in any project
+  - Analyzes project structure, tech stack, and conventions to create comprehensive AI agent context
+  - Automatic discovery from package manifests, config files, CI/CD pipelines, and existing docs
+  - Interactive interview mode to fill gaps in project understanding
+  - Template-based generation with 18 optional sections for maximum flexibility
+  - Support for monorepo projects with nested AGENTS.md files
+- **code-review Skill**: Automated code review with multiple report formats
+  - Analyzes code for bugs, performance issues, security concerns, and best practices
+  - Generates review reports in agent, compact, full, and human-friendly formats
+  - Leverages universal patterns from 2,500+ repositories for consistent quality standards
+- **meeting-notes Skill**: Transcribe, summarize, and organize meeting notes
+  - Captures action items, decisions, and key discussions
+  - Structures notes for easy reference and follow-up
+  - Includes evaluation framework for meeting effectiveness
+- **project-orchestrator Skill**: Plan and coordinate multi-step project initiatives
+  - Breaks down complex projects into manageable tasks and phases
+  - Generates structured project plans with dependencies and timelines
+  - Provides summaries for stakeholder communication
+- **prompter-specs Skill**: Create and manage change proposals using the Prompter specification format
+  - Guides creation of formal specs for planning, proposals, and breaking changes
+  - Ensures consistency with project architecture and guidelines
+- **ui-ux-pro Skill**: Design and improve user interfaces with professional standards
+  - Comprehensive design specification generation based on requirements
+  - Component pattern library aligned with modern design principles
+  - Best practices for accessibility, responsiveness, and design systems
+
 ## [0.8.0] - 2026-03-29
 
 ### ✨ Added
