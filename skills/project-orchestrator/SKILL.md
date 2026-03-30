@@ -290,6 +290,16 @@ Quick context: Docker makes it easy to set up identical dev environments across 
 
 If unsure: Recommend based on team size and deployment target (e.g., "For a solo project deploying to a single VPS, Docker is optional. For a team or cloud deployment, I'd recommend it.").
 
+### Laravel + Docker Guidelines
+
+When the user chooses a Laravel stack (Bundle 3, 4, or 5) with Docker:
+
+- **Use regular Docker and Docker Compose** -- do NOT use or recommend Laravel Sail. Set up a standard `Dockerfile` and `docker-compose.yml` with services for the app, database, and any other dependencies (e.g., Redis).
+- **Use Supervisor** for managing background processes inside the container. Laravel workers like `php artisan queue:work` must run continuously -- Supervisor ensures they stay alive and restart on failure. Include a `supervisord.conf` that manages:
+  - `php artisan queue:work` (queue worker)
+  - Any other long-running processes the project needs (e.g., scheduler via `php artisan schedule:work`)
+- Mention this in the final plan summary under the Docker row and in the recommended next steps.
+
 ---
 
 ## Step 9: Deployment & Hosting

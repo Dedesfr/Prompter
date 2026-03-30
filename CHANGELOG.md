@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## [0.8.5] - 2026-03-30
+
+### ✨ Added
+- **project-orchestrator Skill**: Laravel + Docker guidelines
+  - New guidance for containerizing Laravel applications with Docker and Docker Compose
+  - Recommendation to use standard Docker setup instead of Laravel Sail for better control and production readiness
+  - Supervisor configuration for managing long-running processes (queue workers, schedulers) inside containers
+  - Instructions for `php artisan queue:work` and `php artisan schedule:work` process management
+  - Integration guidance for Docker deployments in final project plan summaries
+  - Process reliability recommendations for production Laravel deployments
+
 ## [0.8.4] - 2026-03-30
 
 ### 🔧 Fixed
