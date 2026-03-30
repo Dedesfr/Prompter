@@ -50,6 +50,7 @@ Use the `AskUserQuestion` tool for **every question** in the interview. This ren
         { "label": "React + Convex", "description": "React (Vite or Next.js) + Convex (real-time backend + built-in DB)" },
         { "label": "Laravel Classic", "description": "Laravel + Blade + Tailwind + PostgreSQL/MySQL" },
         { "label": "Laravel + React", "description": "Laravel + Inertia.js (React) + PostgreSQL/MySQL" },
+        { "label": "Laravel + Filament", "description": "Laravel + Filament (admin panel & CRUD) + Tailwind + PostgreSQL/MySQL" },
         { "label": "Unsure", "description": "I'll recommend based on your project needs" }
       ]
     }
@@ -101,6 +102,7 @@ Always use these exact commands when scaffolding projects. Include the correct c
 | Express | `npm install express --save` |
 | NestJS | `npm i -g @nestjs/cli && nest new {project_name}` |
 | Laravel 12 | `composer create-project laravel/laravel:^12.0 {project_name}` |
+| Filament | `composer require filament/filament && php artisan filament:install --panels` |
 | React + Convex | `npm create convex@latest` |
 
 **Rules:**
@@ -108,6 +110,7 @@ Always use these exact commands when scaffolding projects. Include the correct c
 - For Bundle 1 (JS/TS Full-Stack): include the frontend command (React via Vite or Next.js) AND the backend command (Express or NestJS).
 - For Bundle 2 (React + Convex): include only `npm create convex@latest` -- it scaffolds both the React frontend and Convex backend in one step.
 - For Bundles 3 and 4 (Laravel): include only the Laravel command -- Blade, Inertia, and Tailwind are configured within the Laravel project.
+- For Bundle 5 (Laravel + Filament): include the Laravel command first, then the Filament install command (`composer require filament/filament && php artisan filament:install --panels`).
 - Never invent or substitute alternative installation commands. Use these exactly as shown.
 
 ---
@@ -241,11 +244,12 @@ Let's pick your tech stack. Here are four proven bundles:
 2. **React + Convex**: React (Vite or Next.js) + Convex (real-time backend + built-in document DB, no SQL setup needed)
 3. **Laravel Classic**: Laravel + Blade + Tailwind CSS + MySQL or PostgreSQL
 4. **Laravel + React**: Laravel + Inertia.js (React) + MySQL or PostgreSQL
+5. **Laravel + Filament**: Laravel + Filament (admin panel & CRUD generator) + Tailwind CSS + MySQL or PostgreSQL
 
-Which bundle fits your project best? (Pick 1-4, or say "unsure")
+Which bundle fits your project best? (Pick 1-5, or say "unsure")
 ```
 
-If unsure: Recommend based on what you've learned (e.g., "Since you need SEO and prefer a simpler setup, I'd go with Laravel Classic -- it's fast to build, great for server-rendered pages, and has excellent built-in tooling." Or "If you want real-time features out of the box with minimal backend setup, React + Convex is a great choice.").
+If unsure: Recommend based on what you've learned (e.g., "Since you need SEO and prefer a simpler setup, I'd go with Laravel Classic -- it's fast to build, great for server-rendered pages, and has excellent built-in tooling." Or "If you want real-time features out of the box with minimal backend setup, React + Convex is a great choice." Or "If your app is primarily an admin panel, back-office tool, or data management system, Laravel + Filament gives you a complete CRUD interface with minimal custom frontend work.").
 
 ### Sub-Choices
 
@@ -265,6 +269,10 @@ After the user picks a bundle, ask ONLY the necessary sub-choices:
 
 **Bundle 4 sub-choices:**
 - MySQL vs PostgreSQL? (Same guidance as above)
+
+**Bundle 5 sub-choices:**
+- MySQL vs PostgreSQL? (Same guidance as above)
+- Filament panels: Admin only, or also a user-facing app panel? (Recommend admin-only for MVP -- add a user-facing panel later if needed. If the user needs a public-facing frontend beyond Filament, suggest combining with Blade or consider Bundle 4 instead.)
 
 Provide a brief recommendation for each sub-choice based on the project's stated needs.
 

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [0.8.2] - 2026-03-30
+
+### ✨ Added
+- **project-orchestrator Skill**: Laravel + Filament stack bundle
+  - New "Laravel + Filament" tech stack option for admin panels and back-office CRUD applications
+  - Filament installation command in project scaffolding: `composer require filament/filament && php artisan filament:install --panels`
+  - Sub-choices for database selection (MySQL vs PostgreSQL) and Filament panel configuration
+  - Smart recommendations for admin-only vs user-facing panel deployments
+  - Guidance for combining Filament with additional public-facing frontends when needed
+
 ## [0.8.1] - 2026-03-30
 
 ### ✨ Added

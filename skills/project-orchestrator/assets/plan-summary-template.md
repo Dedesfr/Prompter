@@ -112,6 +112,7 @@
 # Express:        npm install express --save
 # NestJS:         npm i -g @nestjs/cli && nest new {project_name}
 # Laravel 12:     composer create-project laravel/laravel:^12.0 {project_name}
+# Filament:       composer require filament/filament && php artisan filament:install --panels
 ```
 > Replace the above with only the command(s) matching the selected stack.
 
