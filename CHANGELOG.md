@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## [0.8.3] - 2026-03-30
+
+### ✨ Added
+- **mcp-builder Skill**: Create high-quality MCP (Model Context Protocol) servers
+  - Comprehensive guide for building MCP servers that enable LLMs to interact with external services
+  - Support for both Python (FastMCP) and Node/TypeScript (MCP SDK) implementations
+  - Four-phase workflow: Research and Planning, Implementation, Testing & Iteration, Documentation & Publication
+  - Best practices reference covering API coverage, tool naming, context management, and error handling
+  - Framework-specific guides for TypeScript SDK and Python SDK with detailed patterns and examples
+  - Server evaluation scripts and connection utilities for testing and validation
+  - Transport mechanism guidance (Streamable HTTP for remote, stdio for local servers)
+- **skill-creator Skill**: Create, modify, and improve skills with iterative evaluation
+  - Complete workflow for authoring new skills from intent capture through optimization
+  - Test case generation and qualitative/quantitative evaluation framework
+  - Skill performance benchmarking with variance analysis and reporting
+  - Iterative improvement loop based on evaluation results
+  - Skill description optimization to maximize triggering accuracy for Claude
+  - Support for diverse skill types (code generation, data extraction, workflows, subjective tasks)
+  - HTML-based eval viewer for analyzing and comparing skill performance results
+  - Comprehensive skill anatomy guidance: SKILL.md, scripts, references, and assets organization
+
 ## [0.8.2] - 2026-03-30
 
 ### ✨ Added
