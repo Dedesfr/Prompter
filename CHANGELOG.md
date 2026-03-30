@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [0.8.4] - 2026-03-30
+
+### 🔧 Fixed
+- **Skill Discovery**: Fixed `prompter init` to resolve skills from package root instead of project directory
+  - Corrected path resolution for skill discovery in distributed CLI installations
+  - Skills are now correctly discovered from the Prompter package installation directory
+  - Resolves `fileURLToPath(import.meta.url)` to correctly identify package root in compiled JavaScript
+  - Fixes issue where skills would not be found in certain installation scenarios
+
 ## [0.8.3] - 2026-03-30
 
 ### ✨ Added

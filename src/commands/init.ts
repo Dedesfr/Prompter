@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import chalk from 'chalk';
 import { checkbox, Separator } from '@inquirer/prompts';
 import { PROMPTER_DIR, SUPPORTED_TOOLS, AVAILABLE_PROMPTS, PrompterConfig } from '../core/config.js';
@@ -160,8 +161,10 @@ export class InitCommand {
             }
         }
 
-        // Select skills
-        const availableSkills = await discoverSkills(path.join(projectPath, 'skills'));
+        // Select skills — resolve from the package directory, not the user's project
+        // dist/commands/init.js → go up two levels to reach the package root
+        const packageDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+        const availableSkills = await discoverSkills(path.join(packageDir, 'skills'));
         let selectedSkills: SkillMetadata[] = [];
 
         if (options.skills && options.skills.length > 0) {
