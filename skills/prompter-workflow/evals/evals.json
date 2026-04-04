@@ -1,0 +1,89 @@
+{
+  "skill_name": "prompter-workflow",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to add a webhook notification system so that when a user completes an order, we fire a POST to their configured endpoint. Can you create a proposal for this?",
+      "expected_output": "Creates a change proposal under prompter/changes/add-webhook-notifications/ with proposal.md, tasks.md, and at least one spec delta under specs/ with ADDED Requirements and Scenario blocks. Runs prompter validate with --strict.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "Creates proposal.md with Why section",
+          "description": "Output or created files include a proposal.md that contains a ## Why section explaining the motivation"
+        },
+        {
+          "name": "Creates tasks.md",
+          "description": "Output or created files include a tasks.md with a checklist of implementation tasks using - [ ] format"
+        },
+        {
+          "name": "Creates spec delta with ADDED Requirements",
+          "description": "A spec delta file under specs/ contains '## ADDED Requirements' header"
+        },
+        {
+          "name": "Spec delta has Scenario block",
+          "description": "The spec delta contains at least one '#### Scenario:' block (4 hashtags, not bold or bullet)"
+        },
+        {
+          "name": "Does not write implementation code",
+          "description": "The output does not contain actual code implementation (no function definitions, no API endpoint implementations) — only design documents"
+        },
+        {
+          "name": "Mentions running prompter validate",
+          "description": "The output mentions running prompter validate with --strict flag to verify the proposal"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "The add-webhook-notifications proposal has been approved. Please implement it now.",
+      "expected_output": "Reads the proposal.md, design.md (if any), and tasks.md from the change directory. Works through tasks sequentially. Updates tasks.md with checkmarks when done.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "Reads proposal.md before implementing",
+          "description": "Output explicitly mentions reading or referencing proposal.md before starting implementation"
+        },
+        {
+          "name": "Reads tasks.md",
+          "description": "Output explicitly mentions reading or referencing tasks.md"
+        },
+        {
+          "name": "Works through tasks sequentially",
+          "description": "Output describes completing tasks in order, not all at once or in arbitrary order"
+        },
+        {
+          "name": "Updates task checklist",
+          "description": "Output mentions updating tasks.md checkboxes (- [x]) after completion"
+        },
+        {
+          "name": "Does not skip approval gate",
+          "description": "Output does not implement before acknowledging the proposal was approved — respects the approval gate"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "We shipped the webhook feature last week. Can you archive that change?",
+      "expected_output": "Runs prompter list to identify the change, confirms the ID with the user or uses it directly, runs prompter archive <id> --yes, then validates with prompter validate --strict.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "Mentions running prompter list to identify change",
+          "description": "Output mentions running `prompter list` or `prompter show` to verify the change ID before archiving"
+        },
+        {
+          "name": "Uses correct archive command with --yes",
+          "description": "Output includes `prompter archive add-webhook-notifications --yes` (or similar with the correct change ID and --yes flag)"
+        },
+        {
+          "name": "Runs post-archive validation",
+          "description": "Output mentions running `prompter validate --strict` after archiving to confirm specs are consistent"
+        },
+        {
+          "name": "Does not archive blindly without ID check",
+          "description": "Output shows the agent verifying or confirming the change ID rather than immediately running the archive command"
+        }
+      ]
+    }
+  ]
+}

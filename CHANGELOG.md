@@ -1,5 +1,33 @@
 # CHANGELOG
 
+## [0.8.7] - 2026-04-05
+
+### ✨ Added
+- **prompter-workflow Skill**: Guide spec-driven development through Prompter's three-stage workflow
+  - Orchestrates **Propose**, **Apply**, and **Archive** stages for safe, traceable changes
+  - Includes guardrails for minimal, scoped, and verifiable implementations
+  - Integrated with `prompter/changes/` and `prompter/specs/` for change management
+  - Supports drafting spec deltas with `ADDED|MODIFIED|REMOVED|RENAMED` requirements
+
+## [0.8.6] - 2026-04-04
+
+### ✨ Added
+- **Convex Self-Hosted Deployment**: Comprehensive setup guide for self-hosted Convex deployments
+  - New `convex-setup.md` documentation covering Docker Compose setup with backend and dashboard containers
+  - Step-by-step instructions for admin key generation, schema deployment, and frontend integration
+  - Environment variable configuration for both compose stack (`.env.dev`) and CLI/frontend (`.env.local`)
+  - Troubleshooting guide and common mistakes reference
+  - Verification checklist for successful setup
+
+### 🔄 Changed
+- **project-orchestrator Skill**: Added Convex self-hosted deployment options
+  - New Convex hosting sub-choice: Cloud (managed) vs Self-Hosted (Docker, full control)
+  - Comprehensive Convex Self-Hosted Guidelines including Docker Compose setup, environment variables, and admin key generation
+  - Updated plan summary template to include Convex hosting choice and web server configuration
+  - Added Convex self-hosted setup commands to project bootstrapping examples
+  - Best practices for reserved index names and frontend URL configuration in self-hosted deployments
+  - Web Server / Reverse Proxy Guidelines: Always use Caddy for automatic HTTPS in production with zero configuration
+
 ## [0.8.5] - 2026-03-30
 
 ### ✨ Added

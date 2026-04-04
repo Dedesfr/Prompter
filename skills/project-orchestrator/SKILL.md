@@ -263,6 +263,7 @@ After the user picks a bundle, ask ONLY the necessary sub-choices:
 **Bundle 2 sub-choices:**
 - Next.js vs React (Vite)? (Recommend Next.js if SEO matters; Vite if it's a dashboard or real-time app where SSR isn't needed)
 - No database sub-choice needed -- Convex includes a built-in document database with real-time sync.
+- **Convex hosting**: Convex Cloud (managed, easiest) vs Self-Hosted (Docker, full control)? (Recommend Convex Cloud for most projects -- zero infrastructure overhead. Recommend Self-Hosted if the user needs data sovereignty, air-gapped environments, or wants to avoid vendor lock-in.)
 
 **Bundle 3 sub-choices:**
 - MySQL vs PostgreSQL? (Same guidance as above)
@@ -290,6 +291,16 @@ Quick context: Docker makes it easy to set up identical dev environments across 
 
 If unsure: Recommend based on team size and deployment target (e.g., "For a solo project deploying to a single VPS, Docker is optional. For a team or cloud deployment, I'd recommend it.").
 
+### Web Server / Reverse Proxy Guidelines
+
+When Docker is used and a web server or reverse proxy is needed (e.g., for Laravel, Express, NestJS, or a Dockerized frontend):
+
+- **Always use Caddy** as the web server and reverse proxy -- do NOT use or recommend Nginx or Apache.
+- Caddy automatically handles HTTPS (via Let's Encrypt or ZeroSSL) in production with zero extra configuration.
+- For local development, Caddy serves HTTP by default -- no certificate setup needed.
+- Add a `Caddyfile` at the project root and a `caddy` service in `docker-compose.yml`.
+- Mention Caddy in the final plan summary under the Docker/web server row and in the recommended next steps.
+
 ### Laravel + Docker Guidelines
 
 When the user chooses a Laravel stack (Bundle 3, 4, or 5) with Docker:
@@ -299,6 +310,29 @@ When the user chooses a Laravel stack (Bundle 3, 4, or 5) with Docker:
   - `php artisan queue:work` (queue worker)
   - Any other long-running processes the project needs (e.g., scheduler via `php artisan schedule:work`)
 - Mention this in the final plan summary under the Docker row and in the recommended next steps.
+
+### Convex Self-Hosted Guidelines
+
+When the user chooses React + Convex (Bundle 2) with **self-hosted** deployment:
+
+- **Use Docker Compose** with two Convex services:
+  - `convex` — backend image `ghcr.io/get-convex/convex-backend:latest`
+  - `convex-dashboard` — dashboard image `ghcr.io/get-convex/convex-dashboard:latest`
+- **Two environment files** are required:
+  - `.env.dev` (Docker Compose config) — contains `CONVEX_PORT`, `CONVEX_DASHBOARD_PORT`, `CONVEX_DASHBOARD_UI_PORT`, `VITE_CONVEX_URL`, `CONVEX_ADMIN_KEY`, `CONVEX_CLOUD_ORIGIN`, `CONVEX_SITE_ORIGIN`
+  - `.env.local` (CLI and frontend, never committed) — contains `VITE_CONVEX_URL`, `CONVEX_SELF_HOSTED_URL`, `CONVEX_SELF_HOSTED_ADMIN_KEY`
+- **Admin key generation**: After starting the backend, generate the CLI admin key from the running container:
+  ```bash
+  docker compose --env-file .env.dev exec convex ./generate_admin_key.sh
+  ```
+  Copy the printed `convex-self-hosted|...` value into `.env.local` as `CONVEX_SELF_HOSTED_ADMIN_KEY`. Never use a random string or the Docker `CONVEX_ADMIN_KEY` value directly for CLI use.
+- **Add a deploy script** to `package.json`:
+  ```json
+  "deploy:selfhosted": "convex deploy --url $CONVEX_SELF_HOSTED_URL --admin-key $CONVEX_SELF_HOSTED_ADMIN_KEY"
+  ```
+- **Reserved index names**: Self-hosted Convex does not allow reserved index names such as `by_id`. Rename them to non-reserved names (e.g., `by_external_id`) before deploying.
+- **Frontend wiring**: The frontend reads `VITE_CONVEX_URL` at build time. Ensure this value is reachable by the browser and is passed as a Docker build argument when building the frontend image.
+- Mention this setup in the final plan summary under the Docker/Convex row and in the recommended next steps.
 
 ---
 
