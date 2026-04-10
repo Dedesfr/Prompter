@@ -1,5 +1,25 @@
 # CHANGELOG
 
+## [0.8.8] - 2026-04-10
+
+### 🗑️ Removed
+- **skill-creator Agents**: Removed complex agent infrastructure for skill evaluation
+  - Deleted analyzer, comparator, and grader agent definitions
+  - Simplified skill-creator workflow by removing advanced evaluation agents
+- **Evaluation Infrastructure**: Removed benchmark and evaluation tooling
+  - Deleted eval-viewer HTML application and visualization components
+  - Removed benchmark aggregation and report generation scripts
+  - Removed skill evaluation loop and description optimization scripts
+  - Removed JSON schema references for evaluation data structures
+- **Utility Scripts**: Removed support tools and helper modules
+  - Deleted packaging, validation, improvement, and utility scripts
+  - Cleaned up skill-creator Python script dependencies
+
+### 🔄 Changed
+- **skill-creator Skill**: Streamlined to focus on core skill creation workflow
+  - Removed evaluation and benchmarking components
+  - Simplified to essential skill creation and documentation guidance
+
 ## [0.8.7] - 2026-04-05
 
 ### ✨ Added
