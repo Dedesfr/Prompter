@@ -70,6 +70,67 @@ export class InitCommand {
         return choices;
     }
 
+    private getCategorizedSkillChoices(availableSkills: SkillMetadata[], currentSkillNames: string[]): any[] {
+        const categories = [
+            {
+                name: '📋 Planning & Strategy',
+                skills: ['project-orchestrator', 'feature-planner', 'prompter-workflow', 'prompter-specs']
+            },
+            {
+                name: '🎨 Design & UI/UX',
+                skills: ['ui-ux-pro', 'design-system-generator', 'design-md']
+            },
+            {
+                name: '⚙️ Development & Code Review',
+                skills: ['code-review', 'laravel-code-review', 'mcp-builder']
+            },
+            {
+                name: '📝 Documentation',
+                skills: ['doc-builder', 'document-translator', 'agents-md-generator', 'meeting-notes']
+            },
+            {
+                name: '✨ Content & Productivity',
+                skills: ['gamma-builder', 'enhance-prompt']
+            }
+        ];
+
+        const categorized = new Set<string>();
+        const choices: any[] = [];
+
+        for (const category of categories) {
+            const skillsInCategory = category.skills
+                .map(name => availableSkills.find(s => s.name === name))
+                .filter((s): s is SkillMetadata => !!s);
+
+            if (skillsInCategory.length === 0) continue;
+
+            choices.push(new Separator(chalk.bold.cyan(category.name)));
+            for (const skill of skillsInCategory) {
+                categorized.add(skill.name);
+                choices.push({
+                    name: `  ${skill.name}`,
+                    value: skill.name,
+                    checked: currentSkillNames.includes(skill.name)
+                });
+            }
+        }
+
+        // Uncategorized skills
+        const uncategorized = availableSkills.filter(s => !categorized.has(s.name));
+        if (uncategorized.length > 0) {
+            choices.push(new Separator(chalk.bold.cyan('🔧 Other')));
+            for (const skill of uncategorized) {
+                choices.push({
+                    name: `  ${skill.name}`,
+                    value: skill.name,
+                    checked: currentSkillNames.includes(skill.name)
+                });
+            }
+        }
+
+        return choices;
+    }
+
     async execute(options: InitOptions = {}): Promise<void> {
         const projectPath = process.cwd();
         const isReInitialization = await PrompterConfig.prompterDirExists(projectPath);
@@ -177,11 +238,8 @@ export class InitCommand {
 
                 const selectedSkillNames = await checkbox({
                     message: 'Select skills to install:',
-                    choices: availableSkills.map(skill => ({
-                        name: `  ${skill.name}`,
-                        value: skill.name,
-                        checked: currentSkillNames.includes(skill.name)
-                    }))
+                    choices: this.getCategorizedSkillChoices(availableSkills, currentSkillNames),
+                    pageSize: 20
                 });
                 selectedSkills = availableSkills.filter(s => selectedSkillNames.includes(s.name));
             } catch (error) {

@@ -1,5 +1,28 @@
 # CHANGELOG
 
+## [0.8.9] - 2026-04-14
+
+### ✨ Added
+- **New Skills**: Added three new skills to expand documentation, translation, and presentation workflows
+  - **doc-builder**: Generates interactive system flowchart documentation pages with Mermaid.js
+  - **document-translator**: Provides native-quality English ↔ Indonesian translation workflow guidance
+  - **gamma-builder**: Transforms source content into Gamma AI-ready slide deck outlines
+
+### 🔄 Changed
+- **Init Skill Selection UX**: Improved interactive skill selection with categorized groups
+  - Added category headers for planning, design, development, documentation, and productivity skills
+  - Introduced fallback “Other” group for uncategorized skills
+  - Increased skill selection page size for better discoverability in larger skill sets
+- **ui-ux-pro Skill**: Refocused workflow toward decisive, implementation-first design guidance
+  - Updated skill description to emphasize senior-level design decisions and code-ready outcomes
+  - Added mandatory ASCII wireframe-first proposal flow and recommendation-driven option handling
+  - Streamlined discovery, analysis, and iteration instructions for faster design execution
+
+### 🗑️ Removed
+- **Legacy Documentation Files**: Removed outdated docs no longer used by current workflow
+  - Deleted `docs/product-spec.md`
+  - Deleted `docs/tasks.md`
+
 ## [0.8.8] - 2026-04-10
 
 ### 🗑️ Removed
