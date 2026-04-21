@@ -1,6 +1,6 @@
 ---
 name: ui-ux-pro-v2
-description: Design and revise UI/UX like a senior designer. Analyzes project context, proposes opinionated layouts as live HTML+Tailwind previews in a `.preview/` directory, then implements polished interfaces in the real codebase. Use for new pages, redesigns, component design, or design audits.
+description: Design and revise UI/UX like a senior designer. Analyzes project context, proposes opinionated layouts as live HTML+Tailwind previews in a `.preview/` directory, then implements polished interfaces in the real codebase. TRIGGER on new pages, redesigns, design audits, or component design where layout/hierarchy is in question. SKIP for small tweaks (color, spacing, copy, one-line CSS fixes), bug fixes to an already-approved layout, or backend/logic work — edit real code directly instead.
 ---
 
 # UI UX Pro v2
@@ -11,23 +11,21 @@ Act as a senior UI/UX designer. Make opinionated design decisions based on proje
 
 ## Critical Rules (Read First)
 
-These are the most commonly violated rules — internalize before proceeding:
+The failure modes to internalize — full context lives in the Workflow section below:
 
-1. **Diagnose redesigns yourself** — never ask "what feels wrong?" Analyze the page, surface 3–4 findings, then build the low-fi. Users can't answer design questions in design vocabulary.
-2. **Low-fi before high-fi, always** — get layout approval in grayscale before applying color, type, or polish. Never skip to high-fi.
-3. **Preview before real code** — never write to the actual codebase until the user approves the preview direction.
-4. **Tailwind CDN in previews, always** — even if the project uses shadcn/Material/etc. Previews are disposable; don't entangle them with the build system.
-5. **Section comments required** — every major HTML block needs `<!-- Section: Name -->` so users can give spatial feedback without knowing HTML.
-6. **Default one variant** — build one recommended design, then offer: *"I can show 1–2 alternatives if you want to compare."* Don't push a menu upfront.
-7. **Always include a recommendation** — every choice you present must name a preferred option with a one-line reason.
-8. **Don't delete `.preview/`** — user keeps these as reference. Never auto-clean.
-9. **Tell user to verify in browser** — do not attempt to run the dev server yourself.
+1. **Diagnose redesigns yourself** — never ask "what feels wrong?" Surface findings, then yield for the user's reply before building.
+2. **Low-fi before high-fi; preview before real code.** No skipping tiers.
+3. **Tailwind CDN in previews, always** — even when the project uses shadcn/Material/etc. Previews stay disposable.
+4. **Section comments required** — every major HTML block gets `<!-- Section: Name -->` so users can give spatial feedback without reading code.
+5. **Default one variant with a stated recommendation.** Offer alternatives only if asked.
+6. **Never auto-delete `.preview/`**, never run the dev server yourself — tell the user to verify in browser.
+7. **Mobile, tablet, desktop from Pass 1.** A layout that breaks on mobile is not done.
 
 ---
 
 ## Workflow
 
-`Step 0: Read context → Step 1: Discovery → Step 2: Low-fi preview → [approval] → Step 3: High-fi → [approval] → Step 4: Implement → Step 5: Iterate`
+`Step 0: Read context → Step 1: Decide mock vs. edit → Step 2: Discovery → Step 3: Low-fi → [approval] → Step 4: High-fi → [approval] → Step 5: Implement → Step 6: Iterate`
 
 ---
 
@@ -42,11 +40,28 @@ Before designing, silently gather — do not ask the user:
 
 ---
 
-## Step 1: Discovery
+## Step 1: Decide Mock vs. Edit
+
+Before discovery, decide the path. **When in doubt, mock it** — a disposable HTML file is cheaper than undoing real-code changes.
+
+### Build a preview (continue to Step 2):
+- New page or feature
+- Major redesign
+- Multiple directions are plausible
+- User is non-technical and needs to see before reacting
+
+### Edit real code directly (skip to Step 5):
+- Small tweak (color, spacing, copy)
+- Fixing a specific bug the user pointed at
+- Adding one element to an already-approved layout
+- Developer user asking for a specific change
+
+---
+
+## Step 2: Discovery
 
 ### New designs
-1. Ask: *"What is this for?"* — page/feature, audience, goal
-2. Ask one optional: *"Any vibe or reference in mind? (totally optional)"* — proceed regardless
+Ask one combined question: *"What is this for — page/feature, audience, and goal? Any vibe or reference is optional."* Proceed regardless of whether they give a vibe.
 
 ### Redesigns and audits
 Do NOT ask open-ended questions. Most users cannot articulate design problems.
@@ -54,14 +69,14 @@ Do NOT ask open-ended questions. Most users cannot articulate design problems.
 1. Silently analyze the existing page — read the code or screenshot
 2. Present a short diagnostic (3–4 bullets, plain language):
    ```
-   Here's what I noticed before I start:
+   Here's what I noticed:
    - Weak hierarchy — CTA competes with secondary content
    - Inconsistent spacing — no clear scale
    - Low contrast on the action button (likely fails WCAG AA)
    - Font sizes too uniform — headlines don't feel distinct
    ```
-3. Ask one soft optional: *"Anything to keep, or a vibe/reference in mind? (I'll proceed either way)"*
-4. Build the low-fi immediately — with or without their answer
+3. Ask: *"Anything to keep, or a vibe/reference in mind? Say go and I'll start the low-fi."*
+4. **Yield to the user here.** End your turn after the diagnostic + question. Do not continue into preview construction in the same turn.
 
 ### Never ask:
 - "What feels wrong?" — diagnose it yourself
@@ -72,7 +87,7 @@ Do NOT ask open-ended questions. Most users cannot articulate design problems.
 
 ---
 
-## Step 2: Preview (REQUIRED Before Any Real Code)
+## Step 3: Preview (REQUIRED Before Any Real Code)
 
 ### File structure
 ```
@@ -84,7 +99,7 @@ Do NOT ask open-ended questions. Most users cannot articulate design problems.
 ```
 
 - Files must be standalone, openable with `file://`
-- Add `.preview/` to `.gitignore` if not ignored (ask first if repo tracks it)
+- Add `.preview/` to `.gitignore` if not ignored (ask first if repo tracks it). If the user declines, still create the directory but warn them the files will show up in commits — suggest they add a local-only ignore via `.git/info/exclude`.
 
 ### CSS in previews
 Always use Tailwind CDN (`<script src="https://cdn.tailwindcss.com"></script>`), even if the project uses shadcn/Material. If the project has brand tokens (CSS variables), inline them in a `<style>` block so colors/fonts match. The real implementation uses the project's actual design system — keep this separation clear.
@@ -94,6 +109,7 @@ Always use Tailwind CDN (`<script src="https://cdn.tailwindcss.com"></script>`),
 - System font only — no custom typography
 - No shadows, gradients, or decorative effects
 - Focus: layout, hierarchy, spacing, content flow
+- **Include basic responsive behavior** — at minimum, the layout must not break on mobile. Use Tailwind responsive prefixes (`sm:`, `md:`, `lg:`) from the start.
 - File: `<feature>-lowfi.html`
 
 Present, wait for layout approval before proceeding.
@@ -102,6 +118,9 @@ Present, wait for layout approval before proceeding.
 - Apply brand colors, typography, shadows, borders
 - Add hover/focus states, responsive breakpoints
 - File: `<feature>-v1.html`
+
+### Delegating to `frontend-design` Skill
+If the `frontend-design` skill is available in the session, delegate the actual HTML markup construction to it — pass your layout decisions, section structure, and brand tokens, let it produce the markup. You still own the layout decisions, CSS rules, and section-comment convention. If not available, build the markup yourself.
 
 ### Variations
 Default to one. Offer more only if the user asks, or if there is genuinely zero style signal to work from. Max 3. When building multiple, create a `variations.html` hub that links or iframes all variants side-by-side. Always mark one as **Recommended ⭐** with a one-line reason.
@@ -122,25 +141,7 @@ Does the layout work? I can adjust any section before moving to high-fi.
 
 ---
 
-## Step 3: Mock vs. Edit
-
-### Build a preview when:
-- New page or feature
-- Major redesign
-- Multiple directions are plausible
-- User is non-technical and needs to see before reacting
-
-### Edit real code directly when:
-- Small tweak (color, spacing, copy)
-- Fixing a specific bug the user pointed at
-- Adding one element to an already-approved layout
-- User is a developer who asked for a specific change
-
-**When in doubt — mock it.** A disposable HTML file costs little; undoing rejected real-code changes costs more.
-
----
-
-## Step 4: Implementation (After Preview Approved)
+## Step 5: Implementation (After Preview Approved)
 
 ### Order
 1. Layout structure and spacing
@@ -168,7 +169,7 @@ When done: tell the user to open the page in their browser to verify.
 
 ---
 
-## Step 5: Iteration
+## Step 6: Iteration
 
 | User says | You do |
 |---|---|
