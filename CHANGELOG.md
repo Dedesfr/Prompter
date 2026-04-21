@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [0.8.10] - 2026-04-22
+
+### ✨ Added
+- **ui-ux-pro-v2 Skill**: Added a new senior-level design workflow focused on implementation-ready UI decisions
+  - Introduces a low-fi to high-fi preview flow using disposable HTML + Tailwind mocks in `.preview/`
+  - Adds a design spec template plus component and design-principles references for handoff quality
+  - Emphasizes recommendation-driven guidance and more opinionated design decisions
+
 ## [0.8.9] - 2026-04-14
 
 ### ✨ Added
