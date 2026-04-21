@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## [0.8.12] - 2026-04-22
+
+### 🔄 Changed
+- **ui-ux-pro-v2 Skill**: Refactored and streamlined workflow for better clarity
+  - Simplified multi-step process into concise, actionable implementation stages
+  - Improved guidance for "Mock vs. Edit" decisions and browser verification
+  - Condensed design principles and iteration rules for faster execution
+
+### 🗑️ Removed
+- **Redundant Skill Directory**: Deleted accidental `mcp-builder copy/` folder and its contents
+
 ## [0.8.11] - 2026-04-22
 
 ### ✨ Added
