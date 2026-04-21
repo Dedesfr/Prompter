@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [0.8.11] - 2026-04-22
+
+### ✨ Added
+- **frontend-design Skill**: Senior-level design workflow for creating distinctive, production-grade interfaces
+  - Guides the creation of visually striking, memorable, and functional frontend code
+  - Includes comprehensive guidelines for typography, color, motion, and spatial composition
+  - Focuses on intentional aesthetic directions to avoid generic "AI slop"
+  - Emphasizes production-grade implementation with meticulously refined details
+
+
 ## [0.8.10] - 2026-04-22
 
 ### ✨ Added
