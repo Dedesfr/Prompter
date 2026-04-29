@@ -86,7 +86,7 @@ export class InitCommand {
             },
             {
                 name: '📝 Documentation',
-                skills: ['doc-builder', 'document-translator', 'agents-md-generator', 'meeting-notes']
+                skills: ['doc-builder', 'document-translator', 'ai-context-generator', 'meeting-notes']
             },
             {
                 name: '✨ Content & Productivity',

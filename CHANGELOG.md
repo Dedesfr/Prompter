@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## [0.8.14] - 2026-04-29
+
+### 🔄 Changed
+- **ai-context-generator Skill**: Renamed from `agents-md-generator` for broader applicability
+  - Updated skill name in init command documentation category selection
+  - Reflects expanded scope beyond just AGENTS.md generation
+
+### ✨ Added
+- **ai-context-generator Skill References**: New reference materials for enhanced context extraction
+  - **Extraction Checklist**: Structured guide for pulling key facts from project discovery
+  - **Laravel Overlay**: Laravel-specific safety rules and destructive command confirmation requirements
+  - Both references help generate more accurate, project-specific AI context documentation
+
 ## [0.8.12] - 2026-04-22
 
 ### 🔄 Changed
